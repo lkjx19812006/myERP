@@ -1,6 +1,5 @@
 <style scoped lang="less">
   .App {
-
   }
 </style>
 <template>

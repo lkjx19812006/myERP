@@ -1,13 +1,31 @@
 <style lang="less" scoped>
+  .header {
+    height: 56px;
+  }
 
+  @media screen and (min-width: 480px) {
+    .header {
+      height: 64px;
+    }
+  }
+
+  .mu-appbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+  }
 </style>
 <template>
-  <div>
+  <div class="header">
     <mu-appbar>
       <mu-icon-button icon="menu" @click="openMenu = !openMenu" slot="left"/>
       <mu-icon-button icon="account_box_white" @click="openUserMenu = !openUserMenu" slot="right"/>
     </mu-appbar>
+    <!--左边菜单-->
     <menuView :open="openMenu" v-on:closeMenu="closeMenu"/>
+    <!--右边导航-->
     <userMenu :open="openUserMenu" v-on:closeUser="closeUser"/>
   </div>
 </template>

@@ -67,6 +67,7 @@
     },
     methods: {
       submit(){
+        let loading = this.$loading(true);
         //校验用户名和用户密码
         if (this.username === '' || this.password === '') {
           this.msgUser = this.username === '' ? '请输入用户名' : '';
@@ -108,11 +109,12 @@
                 body: body,
                 path: url
               }).then(() => {
+                loading.visible = false;
+                _self.$router.push('/home');
               }, () => {
               });
             }
           );
-          _self.$router.push('/home');
         }, (err) => {
 
         });

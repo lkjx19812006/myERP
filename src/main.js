@@ -14,7 +14,17 @@ import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import 'muse-ui/dist/theme-light.css'
 
+
 Vue.use(MuseUI)
+
+import message  from './commonCOM/message/message.js'
+import loading  from './commonCOM/loading/loading.js'
+//原型扩展 全局方法 message
+Vue.prototype.$message = message;
+
+Vue.prototype.$loading = loading;
+
+import './assets/css/transition.css'
 
 var app = new Vue({
   el: '#app', //html中的根元素的ID
