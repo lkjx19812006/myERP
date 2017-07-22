@@ -7,9 +7,15 @@ let seed = 1;
 
 var Loading = function (options) {
   if (Vue.prototype.$isServer) return;
+  options = options || {};
+  if (typeof options === 'boolean') {
+    options = {
+      visible: options
+    };
+  }
   //创建一个 vue 的实例对象
   instance = new LoadingConstructor({
-    data: {visible: options}
+    data: options
   });
   //1通过 instance.$mount() 手动地挂载一个未挂载的实例
   //并赋值到instance.vm

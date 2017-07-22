@@ -9,19 +9,23 @@
     }
   }
 
-  .mu-appbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 999;
-  }
+  /*.mu-appbar {*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*width: 100%;*/
+    /*z-index: 999;*/
+  /*}*/
 </style>
 <template>
   <div class="header">
     <mu-appbar>
-      <mu-icon-button icon="menu" @click="openMenu = !openMenu" slot="left"/>
-      <mu-icon-button icon="account_box_white" @click="openUserMenu = !openUserMenu" slot="right"/>
+      <mu-icon-button  @click="openMenu = !openMenu" slot="left">
+        <i class="iconfont icon-caidan"></i>
+      </mu-icon-button>
+      <mu-icon-button  @click="openUserMenu = !openUserMenu" slot="right">
+        <i class="iconfont icon-yonghu"></i>
+      </mu-icon-button>
     </mu-appbar>
     <!--左边菜单-->
     <menuView :open="openMenu" v-on:closeMenu="closeMenu"/>

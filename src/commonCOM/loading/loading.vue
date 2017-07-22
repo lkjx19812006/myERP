@@ -10,7 +10,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #fbfbfb;
+    background-color: #ffffff;
   }
 
   @media screen and (min-width: 480px) {
@@ -20,10 +20,9 @@
   }
 </style>
 <template>
-  <!--组件动效-->
-  <transition name="loading">
-    <div class="loading" v-show="visible">
-      <mu-circular-progress :size="60" :strokeWidth="5"/>
+  <transition>
+    <div :style="{'background-color': 'rgba(255, 255, 255,'+ opacity + ')'}" class="loading" v-show="visible">
+      <mu-circular-progress :size="60" :strokeWidth="3"/>
     </div>
   </transition>
 </template>
@@ -32,6 +31,7 @@
     data(){
       return {
         visible: false,
+        opacity: 1
       }
     },
     watch: {

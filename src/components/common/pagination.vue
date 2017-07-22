@@ -1,49 +1,126 @@
 <style lang="less" scoped>
+  @import '../../assets/css/base.less';
+
   .pagination {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    .mu-flat-button {
-      flex: 0 0 auto;
-    }
-    .select {
-      flex: 1;
-      text-align: center;
-      margin: 0;
-      margin-top: 8px;
-      .mu-text-field-content {
-        padding: 0;
+    min-height: 77px;
+    position: relative;
+    .top-open {
+      min-height: 20px;
+      border-top: 1px solid #dbdbdb;
+      width: 100%;
+      background-color: #f0f0f0;
+      poistion: absolute;
+      left: 0;
+      top: 10px;
+      .iconfont {
+        position: absolute;
+        top: -2px;
+        left: 50%;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        transform: translate(-50%);
+        text-align: center;
+        color: #909090;
       }
-      .item {
-        padding: 0 10px;
+      .item_wrap {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 20px 0;
+        .demo-raised-button {
+          margin: 5px;
+        }
       }
     }
-
+    .pagination-content {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #dbdbdb;
+      .mu-flat-button {
+        flex: 0 0 auto;
+      }
+      .select {
+        flex: 1;
+        text-align: center;
+        margin: 0;
+        margin-top: 8px;
+        .mu-text-field-content {
+          padding: 0;
+        }
+        .item {
+          padding: 0 10px;
+        }
+      }
+    }
   }
+
+  .slide-enter {
+    opacity: 0;
+  }
+
+  .slide-enter-active {
+    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
 </style>
 <template>
   <div class="pagination">
-    <mu-flat-button :disabled="page === 1" @click="prePage" label="上一页" class="demo-flat-button" icon="chevron_left"
-                    primary/>
-    <mu-select-field @change="selectChange" v-model="page" class="select" :maxHeight="200">
-      <mu-menu-item class="item" v-for="item, index in list" :key="index" :title="item.title" :value="item.page"/>
-    </mu-select-field>
-    <mu-flat-button :disabled="page === total" @click="nextPage" label="下一页" class="demo-flat-button"
-                    labelPosition="before"
-                    icon="chevron_right" primary/>
+    <div class="top-open" v-if="pageSize">
+      <i class="iconfont icon-shanglajiantou" @click="tragger"/>
+      <transition name="slide">
+        <div class="item_wrap" v-if="showSize">
+          <mu-raised-button @click="pageSizeChange(item)" v-for="item,index in pageSize" :key="index"
+                            :label="'每页' + item + '条' "
+                            class="demo-raised-button"/>
+        </div>
+      </transition>
+    </div>
+    <div class="pagination-content">
+      <mu-flat-button :disabled="page === 1" @click="prePage" class="demo-flat-button" primary>
+        <i class="iconfont icon-zuoyoujiantouicon-defuben1"></i>
+        <span>上一页</span>
+      </mu-flat-button>
+      <mu-select-field @change="selectChange" v-model="page" class="select" :maxHeight="200">
+        <mu-menu-item class="item" v-for="item, index in list" :key="index" :title="item.title" :value="item.page"/>
+      </mu-select-field>
+      <mu-flat-button :disabled="page === total" @click="nextPage" class="demo-flat-button"
+                      labelPosition="before"
+                      primary>
+        <span>下一页</span>
+        <i class="iconfont icon-zuoyoujiantouicon-defuben"></i>
+      </mu-flat-button>
+    </div>
   </div>
 </template>
 <script>
   export default {
-    //该组件接收两个属性 总数 和改变的page 函数
+    //该组件接收三个属性 total pageSize pageChange 函数
     props: {
       total: {
         type: Number,
         default: 1
       },
-      pageChange: ''
+      pageSize: {
+        type: Array,
+        default: null,
+      },
+      pageChange: {
+        type: Function,
+        default: null
+      }
+    },
+    data(){
+      return {
+        showSize: false,//控制是否显示改变每页大小
+        page: 1,//默认当前页为第一页
+      }
     },
     computed: {
       list(){
@@ -71,12 +148,12 @@
         return arr;
       }
     },
-    data(){
-      return {
-        page: 1,//默认当前页为第一页
-      }
-    },
+
     methods: {
+      //点击改变分页大小
+      tragger(){
+        this.showSize = !this.showSize;
+      },
       //选择时改变
       selectChange(val){
         this.senParent(val);
@@ -94,6 +171,11 @@
       //发送信息个父组件
       senParent(val){
         this.$emit('pageChange', val);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      },
+      pageSizeChange(val){
+        this.$emit('pageSizeChange', val);
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
       }

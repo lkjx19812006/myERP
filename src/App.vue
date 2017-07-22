@@ -1,11 +1,27 @@
 <style scoped lang="less">
+  @import './assets/css/base.less';
+
   .App {
+    .mu-back-top {
+      .back_btn {
+        padding: 0;
+        margin: 0;
+        background-color: @color;
+        opacity: .7;
+        color: #fff;
+      }
+    }
   }
 </style>
 <template>
   <div class="App">
     <headerView v-show="validateRoute"></headerView>
     <router-view class="view"></router-view>
+    <mu-back-top class="mu-back-top" :bottom="120" :right="10">
+      <mu-icon-button class="back_btn">
+        <i class="iconfont icon-shangla"></i>
+      </mu-icon-button>
+    </mu-back-top>
   </div>
 </template>
 <script>

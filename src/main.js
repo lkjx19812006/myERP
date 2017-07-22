@@ -24,7 +24,8 @@ Vue.prototype.$message = message;
 
 Vue.prototype.$loading = loading;
 
-import './assets/css/transition.css'
+import './assets/iconfont/iconfont.css'
+import './assets/css/main.css'
 
 var app = new Vue({
   el: '#app', //html中的根元素的ID

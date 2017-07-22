@@ -27,6 +27,15 @@
       padding: 0 10px;
     }
   }
+
+  .message-enter-active, .message-leave-active {
+    transition: opacity .3s .2s, top .4s .2s;
+  }
+
+  .message-enter, .message-leave-to {
+    opacity: 0;
+    top: 60px;
+  }
 </style>
 <template>
   <!--组件动效-->
