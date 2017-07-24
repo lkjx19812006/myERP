@@ -9,21 +9,14 @@
     }
   }
 
-  /*.mu-appbar {*/
-    /*position: fixed;*/
-    /*top: 0;*/
-    /*left: 0;*/
-    /*width: 100%;*/
-    /*z-index: 999;*/
-  /*}*/
 </style>
 <template>
   <div class="header">
     <mu-appbar>
-      <mu-icon-button  @click="openMenu = !openMenu" slot="left">
+      <mu-icon-button @click="openMenu = !openMenu" slot="left">
         <i class="iconfont icon-caidan"></i>
       </mu-icon-button>
-      <mu-icon-button  @click="openUserMenu = !openUserMenu" slot="right">
+      <mu-icon-button @click="openUserMenu = !openUserMenu" slot="right">
         <i class="iconfont icon-yonghu"></i>
       </mu-icon-button>
     </mu-appbar>
@@ -56,6 +49,10 @@
       //关闭用户栏
       closeUser(){
         this.openUserMenu = false;
+      },
+      //返回到上一页
+      back(){
+        window.history.back(-1);
       }
     }
   }

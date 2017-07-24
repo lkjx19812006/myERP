@@ -19,7 +19,7 @@
     <router-view class="view"></router-view>
     <mu-back-top class="mu-back-top" :bottom="120" :right="10">
       <mu-icon-button class="back_btn">
-        <i class="iconfont icon-shangla"></i>
+        <i class="iconfont icon-shangla1"></i>
       </mu-icon-button>
     </mu-back-top>
   </div>

@@ -76,22 +76,24 @@
         }
         //提交数据
         let _self = this;
-        this.$store.dispatch('login', {
-          body: {
-            biz_param: {
-              no: this.username,
-              password: this.password
-            }
-          },
-          path: common.urlCommon + common.apiUrl.login
-        }).then((response) => {
+        //登录信息
+        var body = {
+          biz_param: {
+            no: this.username,
+            password: this.password
+          }
+        }
+        //登录地址
+        var url = common.urlCommon + common.apiUrl.login;
+        common.commonPost(url, body).then((response) => {
           window.localStorage.KEY = response.biz_result.KEY;
           window.localStorage.SID = response.biz_result.SID;
-          window.localStorage.menus = JSON.stringify(response.biz_result.menus);
+
           common.KEY = window.localStorage.KEY;
           common.SID = window.localStorage.SID;
           //导航列表权限
-//          common.menus = filterMenus(JSON.parse(window.localStorage.menus));
+          //window.localStorage.menus = JSON.stringify(response.biz_result.menus);
+          //common.menus = filterMenus(JSON.parse(window.localStorage.menus));
           _self.setCookie('KEY', common.KEY);
           _self.setCookie('SID', common.SID);
           common.getDate(
@@ -109,14 +111,17 @@
                 body: body,
                 path: url
               }).then(() => {
-                loading.visible = false;
                 _self.$router.push('/home');
+                loading.visible = false;
               }, () => {
+                _self.$router.push('/login');
+                loading.visible = false;
               });
             }
           );
         }, (err) => {
-
+          _self.$router.push('/login');
+          loading.visible = false;
         });
       },
       clearCookie(name) {

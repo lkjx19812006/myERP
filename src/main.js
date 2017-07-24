@@ -17,12 +17,15 @@ import 'muse-ui/dist/theme-light.css'
 
 Vue.use(MuseUI)
 
-import message  from './commonCOM/message/message.js'
-import loading  from './commonCOM/loading/loading.js'
+import message  from './commonCOM/message/message'
+import loading  from './commonCOM/loading/loading'
+import showImg  from './commonCOM/showImg/showImg'
 //原型扩展 全局方法 message
 Vue.prototype.$message = message;
 
 Vue.prototype.$loading = loading;
+
+Vue.prototype.$showImg = showImg;
 
 import './assets/iconfont/iconfont.css'
 import './assets/css/main.css'

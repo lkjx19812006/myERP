@@ -20,6 +20,7 @@
         width: 24px;
         height: 24px;
         line-height: 24px;
+        font-size: 18px;
         transform: translate(-50%);
         text-align: center;
         color: #909090;
@@ -73,7 +74,7 @@
 <template>
   <div class="pagination">
     <div class="top-open" v-if="pageSize">
-      <i class="iconfont icon-shanglajiantou" @click="tragger"/>
+      <i class="iconfont icon-shangla" @click="tragger"/>
       <transition name="slide">
         <div class="item_wrap" v-if="showSize">
           <mu-raised-button @click="pageSizeChange(item)" v-for="item,index in pageSize" :key="index"

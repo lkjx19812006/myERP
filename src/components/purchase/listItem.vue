@@ -19,10 +19,21 @@
         }
 
       }
+      .customer {
+        .customerName {
+          color: @color;
+        }
+      }
       .price {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+      }
+      .action {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
       }
     }
   }
@@ -62,10 +73,8 @@
         <span>{{itemData.description}}</span>
       </div>
       <mu-divider/>
-      <div>
-        <mu-flat-button label="按钮1"/>
-        <mu-flat-button label="按钮1"/>
-        <mu-flat-button label="按钮1"/>
+      <div class="action">
+        <slot></slot>
       </div>
     </mu-paper>
   </div>
