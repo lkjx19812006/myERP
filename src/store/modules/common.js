@@ -1,6 +1,5 @@
 import httpService from '../../common/httpService'
 
-
 const state = {
   scrollTop: 0,
 }

@@ -63,16 +63,20 @@
         </div>
         <mu-divider shallowInset/>
         <div class="item btn">
-          <mu-raised-button label="修改信息" class="demo-raised-button" primary fullWidth/>
-          <mu-raised-button label="修改密码" class="demo-raised-button" primary fullWidth/>
-          <mu-raised-button label="退出登录" class="demo-raised-button" primary fullWidth/>
+          <mu-raised-button v-show="false" label="修改信息" class="demo-raised-button" primary fullWidth/>
+          <mu-raised-button v-show="false" label="修改密码" class="demo-raised-button" primary fullWidth/>
+          <mu-raised-button @click="showDialog" label="退出登录" class="demo-raised-button" primary fullWidth>
+            <i class="iconfont icon-guanbi"></i>
+          </mu-raised-button>
         </div>
       </mu-list>
     </mu-drawer>
+
   </div>
 </template>
 
 <script>
+  import common from '../../common/httpService'
   export default {
     props: {
       open: '',
@@ -88,6 +92,18 @@
     methods: {
       close () {
         this.$emit('closeUser')
+      },
+      showDialog(){
+        this.$emit('closeUser')
+        this.$dialog('确定退出登录？').then(() => {
+          window.localStorage.KEY = '';
+          window.localStorage.SID = '';
+          common.KEY = '';
+          common.SID = '';
+          this.$router.push('/login');
+        }).catch(() => {
+
+        })
       }
     }
   }

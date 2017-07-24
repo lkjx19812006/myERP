@@ -48,7 +48,7 @@ var httpService = new Vue({
         this.KEY = window.localStorage.KEY;
         this.SID = window.localStorage.SID;
       }
-      if (!this.SID) {
+      if (this.SID == undefined) {
         redirect('/login');
       }
     },

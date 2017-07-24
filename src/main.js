@@ -20,12 +20,12 @@ Vue.use(MuseUI)
 import message  from './commonCOM/message/message'
 import loading  from './commonCOM/loading/loading'
 import showImg  from './commonCOM/showImg/showImg'
-//原型扩展 全局方法 message
+import dialog from './commonCOM/dialog/dialog'
+//原型扩展 全局方法
 Vue.prototype.$message = message;
-
 Vue.prototype.$loading = loading;
-
 Vue.prototype.$showImg = showImg;
+Vue.prototype.$dialog = dialog;
 
 import './assets/iconfont/iconfont.css'
 import './assets/css/main.css'

@@ -121,7 +121,13 @@
         </div>
       </div>
       <mu-divider/>
+      <div class="detail">
+        <span class="tit">备注信息：</span>
+        <span class="info">{{detail.description}}</span>
+      </div>
+      <mu-divider/>
       <div>
+        <!--分发状态信息-->
         <slot name="action"></slot>
       </div>
     </mu-paper>

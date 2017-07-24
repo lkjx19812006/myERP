@@ -104,13 +104,14 @@
                 biz_method: 'getCmsUserInfo'
               }
               url = common.addSID(url);
-              body.version = 1;
+              body.version = common.version;
               body.time = Date.parse(new Date()) + parseInt(common.difTime);
               body.sign = common.getSign('biz_module=' + body.biz_module + '&biz_method=' + body.biz_method + '&time=' + body.time);
               _self.$store.dispatch('getUserInfor', {
                 body: body,
                 path: url
               }).then(() => {
+                //成功跳转
                 _self.$router.push('/home');
                 loading.visible = false;
               }, () => {
@@ -120,8 +121,12 @@
             }
           );
         }, (err) => {
-          _self.$router.push('/login');
           loading.visible = false;
+          //登录出错时的信息
+          this.$message({
+            type: 'error',
+            message: err.msg
+          });
         });
       },
       clearCookie(name) {

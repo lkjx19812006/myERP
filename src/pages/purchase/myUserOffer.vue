@@ -34,8 +34,8 @@
           </mu-icon-button>
         </mu-appbar>
         <!--这里连接到生成订单模块-->
-        <mu-raised-button style="width: 100%; margin-top: 20px;" slot="action" label="生成订单"
-                          class="demo-raised-button" @click="showOrder = true" primary/>
+        <mu-raised-button style="margin-top: 20px;" slot="action" label="生成订单"
+                          class="demo-raised-button" @click="showOrder = true" primary fullWidth/>
       </offerInfo>
     </transition>
     <!--订单组件-->

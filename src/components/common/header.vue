@@ -29,6 +29,7 @@
 <script>
   import menuView from './menu.vue'
   import userMenu from './userMenu.vue'
+  import common from '../../common/httpService'
   export default {
     props: {},
     data(){
@@ -40,6 +41,12 @@
     components: {
       menuView,
       userMenu
+    },
+    beforeMount(){
+      //获取用户信息
+      if (window.localStorage.KEY == '') {
+        this.$router.push('/login');
+      }
     },
     methods: {
       //关闭菜单栏
