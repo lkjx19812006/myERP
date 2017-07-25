@@ -91,7 +91,7 @@
       <mu-select-field @change="selectChange" v-model="page" class="select" :maxHeight="200">
         <mu-menu-item class="item" v-for="item, index in list" :key="index" :title="item.title" :value="item.page"/>
       </mu-select-field>
-      <mu-flat-button :disabled="page === total" @click="nextPage" class="demo-flat-button"
+      <mu-flat-button :disabled="page >= total" @click="nextPage" class="demo-flat-button"
                       labelPosition="before"
                       primary>
         <span>下一页</span>

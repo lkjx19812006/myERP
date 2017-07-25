@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1500874198976'); /* IE9*/
-  src: url('iconfont.eot?t=1500874198976#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1500874198976') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1500874198976') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1500874198976#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1500960012522'); /* IE9*/
+  src: url('iconfont.eot?t=1500960012522#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1500960012522') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1500960012522') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1500960012522#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -20,6 +20,8 @@
 .icon-caidan:before { content: "\e600"; }
 
 .icon-jsearch:before { content: "\e7b2"; }
+
+.icon-shuaxin:before { content: "\e60a"; }
 
 .icon-zuoyoujiantouicon-defuben:before { content: "\e698"; }
 

@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Mon Jul 24 13:29:58 2017
+Created by FontForge 20120731 at Tue Jul 25 13:20:12 2017
  By admin
 </metadata>
 <defs>
@@ -43,6 +43,9 @@ d="M63 789v-141h892v141h-892zM63 319h892v141h-892v-141zM63 -10h892v141h-892v-141
     <glyph glyph-name="jsearch" unicode="&#xe7b2;" 
 d="M83 18v267h-63v-267q0 -29 20.5 -49.5t49.5 -20.5h267v64h-267q-7 0 -7 6zM874 769v-267h64v267q0 29 -20.5 49.5t-49.5 20.5h-267v-63h267q6 0 6 -7zM988 24l-194 194q-19 19 -46 15l-49 50q48 64 48 144q0 101 -71.5 172.5t-172.5 71.5t-172.5 -71.5t-71.5 -172.5
 t71.5 -172.5t172.5 -71.5q82 0 148 51l48 -49q-3 -28 16 -46l194 -194q16 -16 39.5 -16t39.5 16t16 39t-16 40zM503 251q-73 0 -124.5 51.5t-51.5 124t51.5 124t124.5 51.5t124.5 -51.5t51.5 -124t-51.5 -124t-124.5 -51.5z" />
+    <glyph glyph-name="shuaxin" unicode="&#xe60a;" 
+d="M576 0v165q103 0 161 62t58 157q0 91 -64 155.5t-155 64.5q-95 0 -158.5 -59t-63.5 -161h106q6 0 10.5 -4.5t4.5 -10.5q0 -5 -3 -9v-1l-172 -225h-1q-10 -14 -26 -14t-26 14h-1l-178 225v1q-4 4 -4 9q0 6 4.5 10.5t10.5 4.5h113q0 104 51.5 192.5t140 140t192.5 51.5
+t192.5 -51.5t140 -140t51.5 -192.5t-51.5 -192.5t-140 -140t-192.5 -51.5z" />
     <glyph glyph-name="zuoyoujiantouicon-defuben" unicode="&#xe698;" horiz-adv-x="1262" 
 d="M419.5 896q-18.5 0 -31.5 -13.5t-13 -32.5t13 -33l407 -424q9 -9 0 -18l-407 -424q-13 -14 -13 -33t13 -32.5t31.5 -13.5t31.5 14l407 424q29 30 29 74t-29 74l-407 424q-13 14 -31.5 14z" />
     <glyph glyph-name="zuoyoujiantouicon-defuben1" unicode="&#xe699;" horiz-adv-x="1262" 

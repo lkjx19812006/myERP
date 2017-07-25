@@ -1,20 +1,54 @@
 <style scoped lang="less">
+  @import '../../assets/css/base.less';
+
   .myUserOffer {
     .demo-raised-button {
       margin-right: 10px;
       padding: 0 5px;
     }
-
+    .searchItem {
+      width: 100%;
+      padding: 5px;
+      font-size: 16px;
+    }
+    .refresh {
+      position: fixed;
+      bottom: 170px;
+      right: 10px;
+      opacity: .7;
+      .demo-float-button {
+        height: 48px;
+        width: 48px;
+      }
+    }
   }
 
 </style>
 <template>
   <div class="myUserOffer">
     <!--搜索头-->
-    <search ref="search"/>
-    <!--项目-->
+    <search :more='true' v-on:reset="resetHttp" v-on:search="searchHttp">
+      <mu-raised-button slot="topAction" label="今日报价" :primary="active === 'today' " class="demo-flat-button"
+                        @click="searchTime('today')"/>
+      <mu-raised-button slot="topAction" label="本周报价" :primary="active === 'tswk' " class="demo-flat-button"
+                        @click="searchTime('tswk')"/>
+      <!--用户信息-->
+      <div class="searchItem" slot="contAction">
+        <span>用户信息：</span>
+        <mu-text-field v-model="httpParams.fullname" hintText="请输入会员名"/>
+        <mu-text-field v-model="httpParams.userPhone" hintText="请输入会员手机"/>
+      </div>
+      <!--报价时间-->
+      <div class="searchItem" slot="contAction">
+        <span>报价时间：</span>
+        <mu-date-picker @change="timeChange" v-model="httpParams.startTime" container="dialog" hintText="请选择开始时间"/>
+        <mu-date-picker v-model="httpParams.endTime" :minDate="httpParams.startTime" container="dialog"
+                        hintText="请选择结束时间"/>
+      </div>
+    </search>
+    <!--栏目列-->
     <listItem :key="itemData.id" :itemData="itemData" v-for="itemData in listData">
-      <!--通过slot 分发 并将遍历到的值传递给详情组件显示-->
+      <!--通过未具名slot 分发 并将遍历到的值传递给详情组件显示-->
       <mu-raised-button class="demo-raised-button" @click="showInfo(itemData)">
         <i class="iconfont icon-jsearch fz16 mr5"></i>
         <span>查看详情</span>
@@ -26,18 +60,16 @@
     <!--分页-->
     <pagination :total="total" :pageSize="[15, 20, 30]" @pageSizeChange="pageSizeChange" @pageChange="pageChange"/>
     <!--详情页组件-->
-    <transition name="fade">
-      <offerInfo v-show="showOffer" :detail="detail">
-        <mu-appbar slot="header" class="mu-appbar" title="报价详情">
-          <mu-icon-button slot="left" @click="showOffer = false">
-            <i class="iconfont icon-close fz18"></i>
-          </mu-icon-button>
-        </mu-appbar>
-        <!--这里连接到生成订单模块-->
-        <mu-raised-button style="margin-top: 20px;" slot="action" label="生成订单"
-                          class="demo-raised-button" @click="showOrder = true" primary fullWidth/>
-      </offerInfo>
-    </transition>
+    <offerInfo v-show="showOffer" :detail="detail">
+      <mu-appbar slot="header" class="mu-appbar" title="报价详情">
+        <mu-icon-button slot="left" @click="showOffer = false">
+          <i class="iconfont icon-close fz18"></i>
+        </mu-icon-button>
+      </mu-appbar>
+      <!--这里连接到生成订单模块-->
+      <mu-raised-button style="margin-top: 20px;" slot="action" label="生成订单"
+                        class="demo-raised-button" @click="showOrder = true" primary fullWidth/>
+    </offerInfo>
     <!--订单组件-->
     <transition name="fade">
       <createOrder v-show="showOrder">
@@ -48,6 +80,12 @@
         </mu-appbar>
       </createOrder>
     </transition>
+    <!--刷新按钮-->
+    <div class="refresh">
+      <mu-float-button @click="refresh" mini class="demo-float-button">
+        <i class="iconfont icon-shuaxin"></i>
+      </mu-float-button>
+    </div>
   </div>
 </template>
 <script>
@@ -67,7 +105,16 @@
         showOrder: false,
         orderInfo: {},
         total: 0,
-        timer: "",//定义动画时间
+        timer: "",//定义动画时间,
+        active: '',
+        httpParams: {
+          page: 1,
+          pageSize: 15,
+          startTime: '',
+          endTime: '',
+          fullname: '',
+          userPhone: '',
+        }
       }
     },
     watch: {
@@ -106,9 +153,10 @@
       //切换body高度为100vh 防止滚动
       clearTime(){
         clearTimeout(this.timer);
+        //获取屏幕的高度
         this.timer = setTimeout(function () {
           document.body.style.height = '100vh';
-        }, 300);
+        }, 600);
       },
       //切换body高度为自适应 让其滚动到记录位置
       bodyAuto(){
@@ -116,19 +164,21 @@
         document.body.scrollTop = this.scrollTop;
         document.documentElement.scrollTop = this.scrollTop;
       },
+      //显示详情页组件
       showInfo(itemData){
         let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
         this.$store.dispatch('setScrollTop', scrolltop);
         this.detail = itemData;
         this.showOffer = true;
       },
+      //显示订单页组件
       showOrderInfo(itemData){
         let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
         this.$store.dispatch('setScrollTop', scrolltop);
         this.orderInfo = itemData;
         this.showOrder = true;
       },
-      getHttp(page, pageSize){
+      getHttp(){
         let loading = this.$loading({
           visible: true,
           opacity: 1
@@ -137,10 +187,7 @@
         let body = {
           biz_module: 'erpIntentionOfferService',
           biz_method: 'queryMySendOffer',
-          biz_param: {
-            page: page || 1,
-            pageSize: pageSize || 15
-          }
+          biz_param: this.httpParams
         };
         url = common.addSID(url);
         console.log(url);
@@ -159,19 +206,80 @@
 //          })
         }, (err) => {
           loading.visible = false;
-          //失败的msg
-//          this.$message({
-//            type: 'error',
-//            message: err.msg
-//          })
         })
       },
+      //改变页码
       pageChange(page){
-        this.getHttp(page);
+        this.httpParams.page = page;
+        this.getHttp();
       },
+      //改变分页大小
       pageSizeChange(pageSize){
-        this.getHttp(1, pageSize);
-//        alert(pageSize);
+        this.httpParams.pageSize = pageSize;
+        this.httpParams.page = 1;
+        this.getHttp;
+      },
+      //刷新
+      refresh(){
+        this.getHttp();
+      },
+      //搜索部分 时间搜索 今日本周切换
+      searchTime(param){
+        this.active = param;
+        switch (param) {
+          case 'today':
+            let start = new Date();
+            let end = new Date(start.getTime() + 86400000);
+            //只获取年月日
+            this.httpParams.startTime = this.constructor.filter('formatBirth')(start);
+            this.httpParams.endTime = this.constructor.filter('formatBirth')(end);
+            console.log(this.httpParams);
+            break;
+          case 'tswk':
+            let nowTime = new Date();
+            let nowWeek = nowTime.getDay();
+            var start = '';
+            var end = '';
+            //获取今天是周几 0周天 6是周6
+            switch (nowWeek) {
+              case 0:
+                end = new Date()
+                start = new Date(end.getTime() - 86400000 * 7);
+                break;
+              default:
+                let time = new Date();
+                start = new Date(time.getTime() - 86400000 * (nowWeek - 1))
+                end = new Date(start.getTime() + 86400000 * (7 - nowWeek + 1));
+                break;
+            }
+            this.httpParams.startTime = this.constructor.filter('formatBirth')(start);
+            this.httpParams.endTime = this.constructor.filter('formatBirth')(end);
+            console.log(this.httpParams);
+            break;
+        }
+        this.getHttp();
+      },
+      //手动确定时间
+      timeChange(val){
+        //取消按钮选中状态
+        this.active = '';
+      },
+      //重置
+      resetHttp(){
+        this.active = '';
+        this.httpParams = {
+          page: 1,
+          pageSize: 15,
+          startTime: '',
+          endTime: '',
+          fullname: '',
+          userPhone: '',
+        }
+        this.getHttp();
+      },
+      //搜索
+      searchHttp(){
+        this.getHttp();
       }
     },
   }

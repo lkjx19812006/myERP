@@ -88,7 +88,6 @@
         common.commonPost(url, body).then((response) => {
           window.localStorage.KEY = response.biz_result.KEY;
           window.localStorage.SID = response.biz_result.SID;
-
           common.KEY = window.localStorage.KEY;
           common.SID = window.localStorage.SID;
           //导航列表权限
@@ -112,11 +111,11 @@
                 path: url
               }).then(() => {
                 //成功跳转
+                loading.visible = false;
                 _self.$router.push('/home');
-                loading.visible = false;
               }, () => {
-                _self.$router.push('/login');
                 loading.visible = false;
+                _self.$router.push('/login');
               });
             }
           );

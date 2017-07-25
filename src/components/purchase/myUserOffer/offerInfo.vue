@@ -12,7 +12,7 @@
     box-sizing: border-box;
     background-color: pink;
     .title {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
@@ -61,12 +61,11 @@
   }
 
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .3s, left .3s;
+    transition: left .4s;
   }
 
   .fade-enter, .fade-leave-to {
-    opacity: 0;
-    left: 320px;
+    left: 480px;
   }
 
   @media screen and(min-width: 480px) {
@@ -76,62 +75,64 @@
   }
 </style>
 <template>
-  <div class="offerInfo">
-    <div class="title">
-      <slot name="header"></slot>
-    </div>
-    <mu-paper class="demo-paper" :zDepth="2">
-      <div class="detail">
-        <span class="tit">报价时间：</span>
-        <span class="inof">{{detail.otime}}</span>
+  <transition name="fade" mode="in-out">
+    <div class="offerInfo">
+      <div class="title">
+        <slot name="header"></slot>
       </div>
-      <mu-divider/>
-      <div class="detail">
-        <span class="tit">药材名称：</span>
-        <span class="info color">{{detail.breedName}}</span>
-      </div>
-      <mu-divider/>
-      <div class="detail">
-        <span class="tit">报价客户：</span>
-        <span class="info color">{{detail.offerCustomerName}}</span>
-      </div>
-      <div class="detail">
-        <span class="tit">联系方式：</span>
-        <a type="tel" class="info">{{detail.offerCustomerPhone}}</a>
-      </div>
-      <div class="detail">
-        <span class="tit">所属交易员：</span>
-        <span class="info color">{{detail.offerEmployeeName}}</span>
-      </div>
-      <mu-divider/>
-      <div class="detail">
-        <span class="tit">报价价格：</span>
-        <span class="info" style="color: #F83a00">{{detail.price}}</span>
-      </div>
-      <mu-divider/>
-      <div class="detail">
-        <span class="tit">库存数量：</span>
-        <span class="info color">{{detail.number}}（{{detail.unit | idToUnit}}）</span>
-      </div>
-      <mu-divider/>
-      <!--这里存放报价的资源图片 没列最多3个-->
-      <div class="detail img_wrap">
-        <div class="img_item" @click="$showImg(item)" v-for="item in imgList">
-          <img :src="item">
+      <mu-paper class="demo-paper" :zDepth="2">
+        <div class="detail">
+          <span class="tit">报价时间：</span>
+          <span class="inof">{{detail.otime}}</span>
         </div>
-      </div>
-      <mu-divider/>
-      <div class="detail">
-        <span class="tit">备注信息：</span>
-        <span class="info">{{detail.description}}</span>
-      </div>
-      <mu-divider/>
-      <div>
-        <!--分发状态信息-->
-        <slot name="action"></slot>
-      </div>
-    </mu-paper>
-  </div>
+        <mu-divider/>
+        <div class="detail">
+          <span class="tit">药材名称：</span>
+          <span class="info color">{{detail.breedName}}</span>
+        </div>
+        <mu-divider/>
+        <div class="detail">
+          <span class="tit">报价客户：</span>
+          <span class="info color">{{detail.offerCustomerName}}</span>
+        </div>
+        <div class="detail">
+          <span class="tit">联系方式：</span>
+          <a type="tel" class="info">{{detail.offerCustomerPhone}}</a>
+        </div>
+        <div class="detail">
+          <span class="tit">所属交易员：</span>
+          <span class="info color">{{detail.offerEmployeeName}}</span>
+        </div>
+        <mu-divider/>
+        <div class="detail">
+          <span class="tit">报价价格：</span>
+          <span class="info" style="color: #F83a00">{{detail.price}}</span>
+        </div>
+        <mu-divider/>
+        <div class="detail">
+          <span class="tit">库存数量：</span>
+          <span class="info color">{{detail.number}}（{{detail.unit | idToUnit}}）</span>
+        </div>
+        <mu-divider/>
+        <!--这里存放报价的资源图片 没列最多3个-->
+        <div class="detail img_wrap">
+          <div class="img_item" @click="$showImg(item)" v-for="item in imgList">
+            <img :src="item">
+          </div>
+        </div>
+        <mu-divider/>
+        <div class="detail">
+          <span class="tit">备注信息：</span>
+          <span class="info">{{detail.description}}</span>
+        </div>
+        <mu-divider/>
+        <div>
+          <!--分发状态信息-->
+          <slot name="action"></slot>
+        </div>
+      </mu-paper>
+    </div>
+  </transition>
 </template>
 <script>
   let imgList = [

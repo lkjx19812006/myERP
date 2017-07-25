@@ -287,6 +287,7 @@ export function formatTime(time) {
 export function formatBirth(time) {
     return moment(time).format('YYYY-MM-DD');
 }
+
 export function myBirth(time) {
     return moment(time * 1000).format('YYYY-MM-DD');
 }

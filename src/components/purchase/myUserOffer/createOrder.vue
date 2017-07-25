@@ -10,7 +10,7 @@
     box-sizing: border-box;
     background-color: pink;
     .title {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
@@ -28,12 +28,11 @@
   }
 
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .3s, left .4s;
+    transition: left .4s;
   }
 
   .fade-enter, .fade-leave-to {
-    opacity: 0;
-    left: 320px;
+    left: 480px;
   }
 </style>
 <template>

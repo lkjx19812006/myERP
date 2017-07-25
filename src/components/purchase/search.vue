@@ -26,9 +26,29 @@
     }
   }
 
+  .bottom {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .raised-button {
+      flex: 1;
+      border-radius: 0;
+    }
+    .reset {
+      background-color: #ebebeb;
+      color: @color;
+    }
+
+  }
+
   .mu-drawer {
     padding-top: 30px;
     padding-bottom: 36px;
+    width: 80%;
     .title {
       position: absolute;
       left: 0;
@@ -46,24 +66,6 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
-    .bottom {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      .raised-button {
-        flex: 1;
-        border-radius: 0;
-      }
-      .reset {
-        background-color: #ebebeb;
-        color: @color;
-      }
-
-    }
   }
 
   .search_fixed {
@@ -76,26 +78,22 @@
 <template>
   <div ref="search" class="search">
     <div ref="content" class="content_wrap" :class="{'contentFixed':fixed}">
-      <mu-raised-button label="今日报价" class="demo-flat-button" primary/>
-      <mu-raised-button label="本周报价" class="demo-flat-button" primary/>
+      <!--头部快捷按钮插槽-->
+      <slot name="topAction"></slot>
       <!--点击展开更多-->
-      <mu-raised-button label="更多搜索" class="demo-flat-button" @click="toggle()"/>
+      <mu-raised-button v-if="more" label="更多搜索" class="demo-flat-button" @click="toggle()"/>
     </div>
     <mu-drawer class="mu-drawer" :docked="false" right :open="open" @close="toggle()">
       <div class="title">
         筛选
       </div>
       <mu-list class="mu-list">
-        <mu-list-item title="Menu Item 1"/>
-        <mu-list-item title="Menu Item 2"/>
-        <mu-list-item title="Menu Item 3"/>
-        <div style="background-color: pink; height: 1200px;">
-
-        </div>
+        <!--搜索内容列插槽-->
+        <slot name="contAction"></slot>
       </mu-list>
       <div class="bottom">
-        <mu-raised-button label="重置" class="raised-button reset" primary/>
-        <mu-raised-button label="完成" class="raised-button" @click="toggle()" primary/>
+        <mu-raised-button label="重置" class="raised-button reset" @click="resetHttp()"/>
+        <mu-raised-button label="完成" class="raised-button" @click="searchHttp()" primary/>
       </div>
     </mu-drawer>
   </div>
@@ -104,10 +102,7 @@
   export default {
     props: {
       //后期通过配置httpParams参数控制 控件的显示与隐藏
-      httpParams: {
-        type: 'Object',
-        default: null
-      }
+      more: false,
     },
     data(){
       return {
@@ -138,6 +133,16 @@
     methods: {
       toggle(){
         this.open = !this.open;
+      },
+      //重置搜索条件
+      resetHttp(){
+        this.toggle();
+        this.$emit('reset');
+      },
+      //搜索
+      searchHttp(){
+        this.toggle();
+        this.$emit('search');
       }
     }
   }
