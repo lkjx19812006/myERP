@@ -260,7 +260,7 @@
             this.httpParams.endTime = this.constructor.filter('formatBirth')(end);
             console.log(this.httpParams);
             break;
-        }
+        };
         this.getHttp();
       },
       //手动确定时间

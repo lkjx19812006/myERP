@@ -65,9 +65,8 @@
   .slide-enter {
     opacity: 0;
   }
-
   .slide-enter-active {
-    transition: all 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: all 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
 </style>
@@ -106,7 +105,7 @@
     props: {
       page: {
         type: Number,
-        default: 1
+        default: 1//默认当前页为第一页
       },
       total: {
         type: Number,
@@ -124,7 +123,6 @@
     data(){
       return {
         showSize: false,//控制是否显示改变每页大小
-//        page: 1,//默认当前页为第一页
       }
     },
     computed: {
