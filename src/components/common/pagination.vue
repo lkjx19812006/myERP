@@ -102,8 +102,12 @@
 </template>
 <script>
   export default {
-    //该组件接收三个属性 total pageSize pageChange 函数
+    //该组件接收五个属性 page当前页 total总数页 pageSize分页大小 pageSizeChange分页大小改变  pageChange当前页改变 函数
     props: {
+      page: {
+        type: Number,
+        default: 1
+      },
       total: {
         type: Number,
         default: 1
@@ -120,7 +124,7 @@
     data(){
       return {
         showSize: false,//控制是否显示改变每页大小
-        page: 1,//默认当前页为第一页
+//        page: 1,//默认当前页为第一页
       }
     },
     computed: {
@@ -161,13 +165,13 @@
       },
       //上一页
       prePage(){
-        this.page = this.page - 1;
-        this.senParent(this.page);
+        let page = this.page - 1;
+        this.senParent(page);
       },
       //下一页
       nextPage(){
-        this.page = this.page + 1;
-        this.senParent(this.page);
+        let page = this.page + 1;
+        this.senParent(page);
       },
       //发送信息个父组件
       senParent(val){

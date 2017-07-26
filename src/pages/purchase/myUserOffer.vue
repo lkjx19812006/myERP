@@ -58,7 +58,11 @@
       </mu-raised-button>
     </listItem>
     <!--分页-->
-    <pagination :total="total" :pageSize="[15, 20, 30]" @pageSizeChange="pageSizeChange" @pageChange="pageChange"/>
+    <pagination :total="total"
+                :page="httpParams.page"
+                :pageSize="[15, 20, 30]"
+                @pageSizeChange="pageSizeChange"
+                @pageChange="pageChange"/>
     <!--详情页组件-->
     <offerInfo v-show="showOffer" :detail="detail">
       <mu-appbar slot="header" class="mu-appbar" title="报价详情">
@@ -244,12 +248,12 @@
             switch (nowWeek) {
               case 0:
                 end = new Date()
-                start = new Date(end.getTime() - 86400000 * 7);
+                start = new Date(end.getTime() - 86400000 * 6);
                 break;
               default:
                 let time = new Date();
                 start = new Date(time.getTime() - 86400000 * (nowWeek - 1))
-                end = new Date(start.getTime() + 86400000 * (7 - nowWeek + 1));
+                end = new Date(start.getTime() + 86400000 * (9 - nowWeek));
                 break;
             }
             this.httpParams.startTime = this.constructor.filter('formatBirth')(start);
