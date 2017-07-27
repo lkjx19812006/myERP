@@ -3,12 +3,12 @@ let ShowImgConstructor = Vue.extend(require('./showImg.vue'))
 
 let instance;
 
-var ShowImg= function (options) {
+var ShowImg = function (options) {
   if (Vue.prototype.$isServer) return;
-  options = options || {};
+  options = options || [];
   if (typeof options === 'string') {
     options = {
-      src: options
+      imgList: [options]
     };
   }
   //创建一个 vue 的实例对象

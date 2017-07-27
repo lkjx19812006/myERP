@@ -2,13 +2,13 @@
   @import '../assets/css/base.less';
 
   .login {
-    height: 100vh;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     .title {
+      margin-top: 50px;
       margin-bottom: 50px;
       h1 {
         text-align: center;
@@ -24,6 +24,9 @@
       padding: 0 25px;
       .item {
         margin-bottom: 20px;
+      }
+      .submit {
+        margin-bottom: 50px;
       }
     }
   }
@@ -41,12 +44,12 @@
         </mu-select-field>
       </div>
       <div class="item">
-        <mu-text-field v-model="username" hintText="请输入用户名称" :errorText="msgUser" fullWidth/>
+        <mu-text-field  v-model="username" hintText="请输入用户名称" :errorText="msgUser" fullWidth/>
       </div>
       <div class="item">
         <mu-text-field v-model="password" hintText="请输入用户密码" type="password" :errorText="msgPWS" fullWidth/>
       </div>
-      <div class="item">
+      <div class="item submit">
         <mu-raised-button @click="submit" label="登录" class="demo-raised-button" primary fullWidth/>
       </div>
     </div>

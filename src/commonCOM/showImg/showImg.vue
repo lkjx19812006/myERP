@@ -20,18 +20,23 @@
   <transition>
     <div @click="visible = false" :style="{'background-color': 'rgba(0, 0, 0,'+ opacity + ')'}" class="showImg"
          v-show="visible">
-      <img :src="src" @click="visible = false">
+      <slide :imgList="imgList" v-if="imgList.length > 0"/>
     </div>
   </transition>
 </template>
 <script>
+  import slide from '../slide.vue'
   export default {
     data(){
       return {
         visible: true,
         src: '',
+        imgList: [],
         opacity: .8
       }
+    },
+    components: {
+      slide
     },
     watch: {
       visible(newVisible){
