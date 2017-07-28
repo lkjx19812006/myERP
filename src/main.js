@@ -5,6 +5,9 @@ import router from './router/index.js'
 import store from './store/index.js'
 import * as filters from './filters/index.js'
 
+//国际化
+import i18n from './i18n/index'
+
 //注册过滤器
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
@@ -33,6 +36,7 @@ import './assets/css/main.css'
 var app = new Vue({
   el: '#app', //html中的根元素的ID
   // render: function(create){return create(App)}
+  i18n,
   store,
   render: create => create(App), //渲染组件App
   //实例路由 实现按需加载

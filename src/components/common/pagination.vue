@@ -65,6 +65,7 @@
   .slide-enter {
     opacity: 0;
   }
+
   .slide-enter-active {
     transition: all 500ms cubic-bezier(0.215, 0.61, 0.355, 1);
   }
@@ -77,7 +78,7 @@
       <transition name="slide">
         <div class="item_wrap" v-if="showSize">
           <mu-raised-button @click="pageSizeChange(item)" v-for="item,index in pageSize" :key="index"
-                            :label="'每页' + item + '条' "
+                            :label="item + '/' + $t('message.page')"
                             class="demo-raised-button"/>
         </div>
       </transition>
@@ -85,7 +86,7 @@
     <div class="pagination-content">
       <mu-flat-button :disabled="page === 1" @click="prePage" class="demo-flat-button" primary>
         <i class="iconfont icon-zuoyoujiantouicon-defuben1"></i>
-        <span>上一页</span>
+        <span>{{$t('message.previous_page')}}</span>
       </mu-flat-button>
       <mu-select-field @change="selectChange" v-model="page" class="select" :maxHeight="200">
         <mu-menu-item class="item" v-for="item, index in list" :key="index" :title="item.title" :value="item.page"/>
@@ -93,7 +94,7 @@
       <mu-flat-button :disabled="page >= total" @click="nextPage" class="demo-flat-button"
                       labelPosition="before"
                       primary>
-        <span>下一页</span>
+        <span>{{$t('message.next_page')}}</span>
         <i class="iconfont icon-zuoyoujiantouicon-defuben"></i>
       </mu-flat-button>
     </div>
@@ -129,9 +130,10 @@
       list(){
         //定义当前选择的值
         let arr = [];
-        if (this.total === 0)  return [{page: 1, title: '第1页'}];
+        if (this.total === 0)  return [{page: 1, title: 1 + this.$t('message.page')}];
         //小于5时 都返回1-10页
-        let total = 10; //每次走10页
+        let total = 10;
+        if (this.total < 10) total = this.total//每次走10页 小于10页 走显示当前页
         let count = 1; // 从1开始计数
         //当前页 大于5时 要截取遍历的数字
         if (this.page > 5) {
@@ -144,7 +146,7 @@
         for (let i = count - 1; i < total; i++) {
           let obj = {
             page: i + 1,
-            title: (i + 1) + '/' + this.total + '页'
+            title: (i + 1) + '/' + this.total + this.$t('message.page')
           }
           arr.push(obj);
         }

@@ -7,6 +7,7 @@ var httpService = new Vue({
   data: {
     customerId: '',
     urlCommon: '/front',
+    language: window.localStorage.language,
     KEY: window.localStorage.KEY,
     SID: window.localStorage.SID,
     version: 1,

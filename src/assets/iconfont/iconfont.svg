@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Tue Jul 25 13:20:12 2017
+Created by FontForge 20120731 at Fri Jul 28 13:42:19 2017
  By admin
 </metadata>
 <defs>
@@ -38,6 +38,9 @@ t9.5 -10.5t21.5 -4h37h67h81h80h64h36q23 0 34 12t2 38q-5 13 -9.5 30.5t-9.5 34.5q-
     <glyph glyph-name="shangla" unicode="&#xe657;" 
 d="M148 -39q-13 -15 -33.5 -15.5t-35 13t-15.5 33.5t12 35l403 399q13 15 33 16t35 -13v0v0v0l2 -1v-1l1 -1v0v0v0h1l401 -399q14 -15 13 -35t-16 -33.5t-35 -13t-34 15.5l-366 360l-366 -360v0zM148 347q-13 -15 -33.5 -16t-35 13t-15.5 34t12 35l403 399q13 15 33 16
 t35 -13v0v0l2 -1v-1l1 -1v0v0v0l1 -1l401 -398q14 -15 13 -35t-16 -34t-35 -13t-34 16l-366 360z" />
+    <glyph glyph-name="gengduo" unicode="&#xe659;" 
+d="M173 384zM66 384q0 44 31.5 75.5t75.5 31.5t75.5 -31.5t31.5 -75.5t-31.5 -75.5t-75.5 -31.5t-75.5 31.5t-31.5 75.5zM512 384zM405 384q0 44 31 75.5t75.5 31.5t76 -31.5t31.5 -75.5t-31.5 -75.5t-76 -31.5t-75.5 31.5t-31 75.5zM850 384zM743 384q0 44 31.5 75.5
+t76 31.5t75.5 -31.5t31 -75.5t-31 -75.5t-75.5 -31.5t-76 31.5t-31.5 75.5z" />
     <glyph glyph-name="caidan" unicode="&#xe600;" 
 d="M63 789v-141h892v141h-892zM63 319h892v141h-892v-141zM63 -10h892v141h-892v-141z" />
     <glyph glyph-name="jsearch" unicode="&#xe7b2;" 

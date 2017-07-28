@@ -7,9 +7,13 @@ var Dialog = function (options) {
   options = options || {};
   if (typeof options === 'string') {
     options = {
-      message: options
+      message: options,
+      title: this.$t('message.friendly_warning'),
+      cancel: this.$t('message.cancel'),
+      confirm: this.$t('message.confirm')
     };
   }
+
   //创建一个 vue 的实例对象
   instance = new DialogConstructor({
     data: options
@@ -26,8 +30,10 @@ var Dialog = function (options) {
     instance.vm.$watch('selected', function (newVal) {
       if (newVal) {
         resolve();
+        return instance.vm
       } else {
         reject();
+        return instance.vm
       }
     });
   })

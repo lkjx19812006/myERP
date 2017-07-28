@@ -1,5 +1,8 @@
 <style lang="less" scoped>
+  @import '../../../assets/css/base.less';
+
   .createOrder {
+    font-size: 16px;
     position: fixed;
     z-index: 99;
     top: 0;
@@ -21,10 +24,10 @@
       padding: 5px;
       overflow-x: hidden;
       overflow-y: scroll;
-      .detail {
-        height: 2000px;
-      }
     }
+  }
+  .inputClass {
+    text-align: center;
   }
 
   .fade-enter-active, .fade-leave-active {
@@ -41,21 +44,12 @@
       <slot name="header"></slot>
     </div>
     <mu-paper class="demo-paper" :zDepth="2">
-      <div class="detail">
-        <span class="tit">报价时间：</span>
-        <!--<span class="inof">{{detail}}</span>-->
-      </div>
+      <slot name="formData"></slot>
     </mu-paper>
   </div>
 </template>
 <script>
   export default {
-    props: {
-      formData: {
-        type: Object,
-        default: null
-      }
-    },
     data(){
       return {}
     },

@@ -21,37 +21,61 @@
         width: 48px;
       }
     }
+    .formData {
+      .detail {
+        padding: 0 13px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .tit {
+          flex: 0 0 auto;
+          width: 80px;
+          line-height: 40px;
+        }
+        .inputClass {
+          flex: 1;
+        }
+      }
+    }
   }
 
-  .slide-wrap {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, .8);
-  }
+
 </style>
 <template>
   <div class="myUserOffer">
     <!--搜索头-->
     <search :more='true' v-on:reset="resetHttp" v-on:search="searchHttp">
-      <mu-raised-button slot="topAction" label="今日报价" :primary="active === 'today' " class="demo-flat-button"
+      <mu-raised-button slot="topAction" :label="$t('message.today_offer')" :primary="active === 'today' "
+                        class="demo-flat-button"
                         @click="searchTime('today')"/>
-      <mu-raised-button slot="topAction" label="本周报价" :primary="active === 'tswk' " class="demo-flat-button"
+      <mu-raised-button slot="topAction" :label="$t('message.week_offer')" :primary="active === 'tswk' "
+                        class="demo-flat-button"
                         @click="searchTime('tswk')"/>
       <!--用户信息-->
       <div class="searchItem" slot="contAction">
-        <span>用户信息：</span>
-        <mu-text-field v-model="httpParams.fullname" hintText="请输入会员名"/>
-        <mu-text-field v-model="httpParams.userPhone" hintText="请输入会员手机"/>
+        <span>{{$t('message.customer_info')}}：</span>
+        <mu-text-field v-model="httpParams.fullname" :hintText="$t('message.customerName')"/>
+        <mu-text-field v-model="httpParams.userPhone" :hintText="$t('message.customerPhone')"/>
       </div>
       <!--报价时间-->
       <div class="searchItem" slot="contAction">
-        <span>报价时间：</span>
-        <mu-date-picker @change="timeChange" v-model="httpParams.startTime" container="dialog" hintText="请选择开始时间"/>
-        <mu-date-picker v-model="httpParams.endTime" :minDate="httpParams.startTime" container="dialog"
-                        hintText="请选择结束时间"/>
+        <span>{{$t('message.quatiton_time')}}：</span>
+        <!--日期时间国际化-->
+        <mu-date-picker :dateTimeFormat="language==='zh_CN'?zhCNDateFormat:enDateFormat"
+                        @change="timeChange"
+                        v-model="httpParams.startTime"
+                        container="dialog"
+                        :okLabel="$t('message.confirm')"
+                        :cancelLabel="$t('message.cancel')"
+                        :hintText="$t('message.start_time')"/>
+        <mu-date-picker :disabled="httpParams.startTime === ''"
+                        :dateTimeFormat="language==='zh_CN'?zhCNDateFormat:enDateFormat"
+                        v-model="httpParams.endTime"
+                        :minDate="httpParams.startTime"
+                        container="dialog"
+                        :okLabel="$t('message.confirm')"
+                        :cancelLabel="$t('message.cancel')"
+                        :hintText="$t('message.end_time')"/>
       </div>
     </search>
     <!--栏目列-->
@@ -66,7 +90,7 @@
       </mu-raised-button>
     </listItem>
     <!--分页-->
-    <pagination :total="total"
+    <pagination :total="pages"
                 :page="httpParams.page"
                 :pageSize="[15, 20, 30]"
                 @pageSizeChange="pageSizeChange"
@@ -90,6 +114,41 @@
             <i class="iconfont icon-close fz18"></i>
           </mu-icon-button>
         </mu-appbar>
+        <div class="formData" slot="formData">
+          <myTitle title="商品信息"/>
+          <div class="detail">
+            <span class="tit">商品标题</span>
+            <mu-text-field class="inputClass" v-model="orderInfo.breedName"/>
+          </div>
+          <div class="detail">
+            <span class="tit">品种名称</span>
+            <mu-text-field class="inputClass" v-model="orderInfo.breedName"/>
+          </div>
+          <div class="detail">
+            <span class="tit">数量</span>
+            <mu-text-field class="inputClass" v-model="orderInfo.number"/>
+          </div>
+          <div class="detail">
+            <span class="tit">单位</span>
+            <mu-text-field class="inputClass" v-model="orderInfo.number"/>
+          </div>
+          <div class="detail">
+            <span class="tit">成本价</span>
+            <mu-text-field class="inputClass" v-model="orderInfo.number"/>
+          </div>
+          <div class="detail">
+            <span class="tit">质量</span>
+            <mu-text-field multiLine :rowsMax="3" class="inputClass" v-model="orderInfo.quality"/>
+          </div>
+          <div class="detail">
+            <span class="tit">产地</span>
+            <mu-text-field class="inputClass" v-model="orderInfo.number"/>
+          </div>
+          <div class="detail">
+            <span class="tit">规格</span>
+            <mu-text-field class="inputClass" v-model="orderInfo.spec"/>
+          </div>
+        </div>
       </createOrder>
     </transition>
     <!--刷新按钮-->
@@ -101,22 +160,26 @@
   </div>
 </template>
 <script>
+  import {enDateFormat, dateTimeFormat} from '../../filters/index'
   import search from '../../components/purchase/search.vue'
   import listItem from '../../components/purchase/listItem.vue'
   import pagination from '../../components/common/pagination.vue'
   import offerInfo from '../../components/purchase/myUserOffer/offerInfo.vue'
   import createOrder from  '../../components/purchase/myUserOffer/createOrder.vue'
+  import myTitle from '../../components/common/title.vue'
   import common from '../../common/httpService'
   export default{
     props: {},
     data(){
       return {
+        enDateFormat: enDateFormat,
+        zhCNDateFormat: dateTimeFormat,
         listData: [],
         showOffer: false,
         detail: {},
         showOrder: false,
         orderInfo: {},
-        total: 0,
+        pages: 0,
         timer: "",//定义动画时间,
         active: '',
         httpParams: {
@@ -149,6 +212,9 @@
     computed: {
       scrollTop(){
         return this.$store.state.common.scrollTop;
+      },
+      language(){
+        return common.language;
       }
     },
     components: {
@@ -156,7 +222,8 @@
       listItem,
       pagination,
       offerInfo,
-      createOrder
+      createOrder,
+      myTitle
     },
     created(){
       this.getHttp();
@@ -181,6 +248,7 @@
         let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
         this.$store.dispatch('setScrollTop', scrolltop);
         this.detail = itemData;
+        this.orderInfo = itemData;
         this.showOffer = true;
       },
       //显示订单页组件
@@ -210,7 +278,7 @@
         common.commonPost(url, body).then((suc) => {
           loading.visible = false;
           this.listData = suc.biz_result.list;
-          this.total = suc.biz_result.total;
+          this.pages = suc.biz_result.pages;
           //成功的msg
 //          this.$message({
 //            type: 'success',
@@ -229,7 +297,7 @@
       pageSizeChange(pageSize){
         this.httpParams.pageSize = pageSize;
         this.httpParams.page = 1;
-        this.getHttp;
+        this.getHttp();
       },
       //刷新
       refresh(){
@@ -269,7 +337,7 @@
             console.log(this.httpParams);
             break;
         }
-        ;
+        this.httpParams.page = 1;
         this.getHttp();
       },
       //手动确定时间

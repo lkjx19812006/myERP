@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1500960012522'); /* IE9*/
-  src: url('iconfont.eot?t=1500960012522#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1500960012522') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1500960012522') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1500960012522#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1501220539922'); /* IE9*/
+  src: url('iconfont.eot?t=1501220539922#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1501220539922') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1501220539922') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1501220539922#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -16,6 +16,8 @@
 }
 
 .icon-shangla:before { content: "\e657"; }
+
+.icon-gengduo:before { content: "\e659"; }
 
 .icon-caidan:before { content: "\e600"; }
 

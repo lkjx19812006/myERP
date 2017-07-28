@@ -85,7 +85,6 @@
       if (this.imgList.length > 0) {
         this.right = this.imgList.length - 1;
         this.wrapWidth = this.$refs.wrap.offsetWidth;
-        debugger;
         switch (this.imgList.length) {
           case 1:
             this.$refs['item' + this.center][0].style.transform = 'translate3d(0, 0, 0)';

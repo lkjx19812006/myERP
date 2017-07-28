@@ -48,7 +48,7 @@
       <mu-divider/>
       <div class="customer">
         <div>
-          <span>报价客户：</span>
+          <span>报价供应商：</span>
           <span class="customerName">{{itemData.offerCustomerName}}</span>
         </div>
         <div style="padding: 5px 0">
@@ -69,7 +69,7 @@
       </div>
       <mu-divider/>
       <div class="description">
-        <span>备注信息：</span>
+        <span>报价备注：</span>
         <span>{{itemData.description}}</span>
       </div>
       <mu-divider/>

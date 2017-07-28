@@ -4,7 +4,7 @@ import httpService from '../../common/httpService'
 const state = {
   user: {
     name: "", idnumber: ""
-  }
+  },
 
 }
 

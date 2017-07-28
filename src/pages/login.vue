@@ -35,22 +35,24 @@
   <div class="login">
     <div class="login_wrap">
       <div class="title">
-        <h1>药材买卖网移动ERP V1.0</h1>
+        <h1>{{$t('message.title')}} V1.0</h1>
       </div>
       <div class="item">
-        <mu-select-field v-model="langType" fullWidth>
-          <mu-menu-item :value="1" title="中文"/>
-          <mu-menu-item :value="2" title="English"/>
+        <mu-select-field @change="changeLanguage" v-model="language" fullWidth>
+          <mu-menu-item value="zh_CN" title="中文"/>
+          <mu-menu-item value="en" title="English"/>
         </mu-select-field>
       </div>
       <div class="item">
-        <mu-text-field  v-model="username" hintText="请输入用户名称" :errorText="msgUser" fullWidth/>
+        <mu-text-field v-model="username" :hintText="$t('message.userName')" :errorText="msgUser" fullWidth/>
       </div>
       <div class="item">
-        <mu-text-field v-model="password" hintText="请输入用户密码" type="password" :errorText="msgPWS" fullWidth/>
+        <mu-text-field v-model="password" :hintText="$t('message.passWord')" type="password" :errorText="msgPWS"
+                       fullWidth/>
       </div>
       <div class="item submit">
-        <mu-raised-button @click="submit" label="登录" class="demo-raised-button" primary fullWidth/>
+        <mu-raised-button @click="submit" :label="$t('message.systemlogin')" class="demo-raised-button" primary
+                          fullWidth/>
       </div>
     </div>
   </div>
@@ -61,20 +63,44 @@
     name: 'login_view',
     data() {
       return {
-        langType: 1,
         username: '',
         msgUser: '',
         password: '',
         msgPWS: '',
       }
     },
+    computed: {
+      language(){
+        //设置默认 语言环境
+        if (common.language) {
+          this.$root.$i18n.locale = common.language;
+          return common.language;
+        }
+        this.$root.$i18n.locale = 'zh_CN';
+        return 'zh_CN';
+      }
+    },
     methods: {
+      changeLanguage(val){
+        //写入本地 进行全局切换 保存全局语言环境配置
+        switch (val) {
+          case 'zh_CN':
+            window.localStorage.language = 'zh_CN';
+            common.language = 'zh_CN';
+            this.$root.$i18n.locale = 'zh_CN';
+            break;
+          case 'en':
+            window.localStorage.language = 'en';
+            common.language = 'en';
+            this.$root.$i18n.locale = 'en'
+            break;
+        }
+      },
       submit(){
-        let loading = this.$loading(true);
         //校验用户名和用户密码
         if (this.username === '' || this.password === '') {
-          this.msgUser = this.username === '' ? '请输入用户名' : '';
-          this.msgPWS = this.password === '' ? '请输入用户密码' : '';
+          this.msgUser = this.username === '' ? this.$t('message.account_or_password') : '';
+          this.msgPWS = this.password === '' ? this.$t('message.account_or_password') : '';
           return;
         }
         //提交数据
@@ -88,6 +114,7 @@
         }
         //登录地址
         var url = common.urlCommon + common.apiUrl.login;
+        let loading = this.$loading(true);
         common.commonPost(url, body).then((response) => {
           window.localStorage.KEY = response.biz_result.KEY;
           window.localStorage.SID = response.biz_result.SID;

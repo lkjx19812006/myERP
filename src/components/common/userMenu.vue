@@ -23,7 +23,8 @@
       margin-top: 15px;
       .tit {
         flex: 0 0 auto;
-        text-align: center;
+        width: 80px;
+        text-align: left;
         color: @color;
       }
       .info {
@@ -41,31 +42,38 @@
 </style>
 <template>
   <div class="userInfo">
-    <mu-drawer :docked="false" width="200px" right :open="open" @close="close">
-      <mu-appbar class="userTitle" title="用户信息"/>
+    <mu-drawer :docked="false" width="240px" right :open="open" @close="close">
+      <mu-appbar class="userTitle" :title="$t('message.userInfo')"/>
       <mu-list>
         <mu-paper class="demo-paper" circle :zDepth="4">
           <img src="../../assets/images/userImg.png">
         </mu-paper>
         <div class="item">
-          <span class="tit">姓名：</span>
+          <mu-select-field @change="changeLanguage" v-model="language" fullWidth>
+            <mu-menu-item value="zh_CN" title="中文"/>
+            <mu-menu-item value="en" title="English"/>
+          </mu-select-field>
+        </div>
+        <div class="item">
+          <span class="tit">{{$t('message.userName')}}：</span>
           <span class="info">{{user.name}}</span>
         </div>
         <mu-divider shallowInset/>
         <div class="item">
-          <span class="tit">职位：</span>
+          <span class="tit">{{$t('message.job')}}：</span>
           <span class="info">{{user.position}}</span>
         </div>
         <mu-divider shallowInset/>
         <div class="item">
-          <span class="tit">手机：</span>
+          <span class="tit">{{$t('message.mobile')}}：</span>
           <span class="info">{{user.mobile}}</span>
         </div>
         <mu-divider shallowInset/>
         <div class="item btn">
           <mu-raised-button v-show="false" label="修改信息" class="demo-raised-button" primary fullWidth/>
           <mu-raised-button v-show="false" label="修改密码" class="demo-raised-button" primary fullWidth/>
-          <mu-raised-button @click="showDialog" label="退出登录" class="demo-raised-button" primary fullWidth>
+          <mu-raised-button @click="showDialog" :label="$t('message.logout')" class="demo-raised-button" primary
+                            fullWidth>
             <i class="iconfont icon-guanbi"></i>
           </mu-raised-button>
         </div>
@@ -84,18 +92,42 @@
     computed: {
       user(){
         return this.$store.state.user.user;
+      },
+      language(){
+        //设置默认 语言环境
+        if (common.language) {
+          this.$root.$i18n.locale = common.language;
+          return common.language;
+        }
+        this.$root.$i18n.locale = 'zh_CN';
+        return 'zh_CN';
       }
     },
     data () {
       return {}
     },
     methods: {
+      changeLanguage(val){
+        //写入本地 进行全局切换 保存全局语言环境配置
+        switch (val) {
+          case 'zh_CN':
+            window.localStorage.language = 'zh_CN';
+            common.language = 'zh_CN';
+            this.$root.$i18n.locale = 'zh_CN';
+            break;
+          case 'en':
+            window.localStorage.language = 'en';
+            common.language = 'en';
+            this.$root.$i18n.locale = 'en'
+            break;
+        }
+      },
       close () {
         this.$emit('closeUser')
       },
       showDialog(){
         this.$emit('closeUser')
-        this.$dialog('确定退出登录？').then(() => {
+        this.$dialog(this.$t('message.logout') + '?').then(() => {
           window.localStorage.KEY = '';
           window.localStorage.SID = '';
           common.KEY = '';

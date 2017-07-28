@@ -73,6 +73,12 @@
     margin-bottom: 10px;
   }
 
+  .demo-icon-button {
+    height: 36px;
+    .iconfont {
+      color: #909090;
+    }
+  }
 
 </style>
 <template>
@@ -81,19 +87,21 @@
       <!--头部快捷按钮插槽-->
       <slot name="topAction"></slot>
       <!--点击展开更多-->
-      <mu-raised-button v-if="more" label="更多搜索" class="demo-flat-button" @click="toggle()"/>
+      <mu-icon-button v-if="more" icon="more_vert" class="demo-icon-button" @click="toggle()">
+        <i class="iconfont icon-gengduo"></i>
+      </mu-icon-button>
     </div>
     <mu-drawer class="mu-drawer" :docked="false" right :open="open" @close="toggle()">
       <div class="title">
-        筛选
+        {{$t('message.filter')}}
       </div>
       <mu-list class="mu-list">
         <!--搜索内容列插槽-->
         <slot name="contAction"></slot>
       </mu-list>
       <div class="bottom">
-        <mu-raised-button label="重置" class="raised-button reset" @click="resetHttp()"/>
-        <mu-raised-button label="完成" class="raised-button" @click="searchHttp()" primary/>
+        <mu-raised-button :label="$t('message.reset')" class="raised-button reset" @click="resetHttp()"/>
+        <mu-raised-button :label="$t('message.confirm')" class="raised-button" @click="searchHttp()" primary/>
       </div>
     </mu-drawer>
   </div>

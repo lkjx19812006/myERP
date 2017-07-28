@@ -4,8 +4,8 @@
   <!--组件动效-->
   <mu-dialog :open="dialog" :title="title" @close="close">
     {{message}}
-    <mu-flat-button slot="actions" @click="click(false)" primary label="取消" v-if="type !== 'alert'"/>
-    <mu-flat-button slot="actions" primary @click="click(true)" label="确定"/>
+    <mu-flat-button slot="actions" @click="click(false)" primary :label="cancel" v-if="type !== 'alert'"/>
+    <mu-flat-button slot="actions" primary @click="click(true)" :label="confirm"/>
   </mu-dialog>
 </template>
 <script>
@@ -14,9 +14,11 @@
       return {
         type: 'cofirm',
         message: '',
+        title: '',
         dialog: true,
-        title: '提示信息',
         selected: '',
+        cancel: '',
+        confirm: '',
       }
     },
     watch: {
