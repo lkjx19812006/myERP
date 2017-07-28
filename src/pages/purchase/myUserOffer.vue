@@ -96,16 +96,21 @@
                 @pageSizeChange="pageSizeChange"
                 @pageChange="pageChange"/>
     <!--详情页组件-->
-    <offerInfo v-show="showOffer" :detail="detail">
+    <slidePage v-show="showOffer">
       <mu-appbar slot="header" class="mu-appbar" title="报价详情">
         <mu-icon-button slot="left" @click="showOffer = false">
           <i class="iconfont icon-close fz18"></i>
         </mu-icon-button>
       </mu-appbar>
+      <offerInfo slot="content" :detail="detail"/>
       <!--这里连接到生成订单模块-->
-      <mu-raised-button style="margin-top: 20px;" slot="action" label="生成订单"
-                        class="demo-raised-button" @click="showOrder = true" primary fullWidth/>
-    </offerInfo>
+      <mu-raised-button slot="action"
+                        style="margin: 20px 10px;"
+                        label="生成订单"
+                        class="demo-raised-button"
+                        @click="showOrder = true"
+                        primary fullWidth/>
+    </slidePage>
     <!--订单组件-->
     <transition name="fade">
       <createOrder v-show="showOrder">
@@ -164,6 +169,7 @@
   import search from '../../components/purchase/search.vue'
   import listItem from '../../components/purchase/listItem.vue'
   import pagination from '../../components/common/pagination.vue'
+  import slidePage from '../../components/common/slidePage.vue'
   import offerInfo from '../../components/purchase/myUserOffer/offerInfo.vue'
   import createOrder from  '../../components/purchase/myUserOffer/createOrder.vue'
   import myTitle from '../../components/common/title.vue'
@@ -221,6 +227,7 @@
       search,
       listItem,
       pagination,
+      slidePage,
       offerInfo,
       createOrder,
       myTitle
@@ -267,7 +274,7 @@
         let body = {
           biz_module: 'erpIntentionOfferService',
           biz_method: 'queryMySendOffer',
-          biz_param: this.httpParams
+          biz_param: common.filterFormData(this.httpParams)
         };
         url = common.addSID(url);
         console.log(url);

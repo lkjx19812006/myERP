@@ -18,6 +18,9 @@ let routes = [{
 }, {
   path: '/purchase/myUserOffer',
   component: resolve => require(['../pages/purchase/myUserOffer.vue'], resolve)
+},{
+  path: '/purchase/myReceivedOffer',
+  component: resolve => require(['../pages/purchase/myReceivedOffer.vue'], resolve)
 }]
 var router = new vueRouter({
   mode: 'history',
@@ -28,26 +31,5 @@ var router = new vueRouter({
   linkActiveClass: "myactive",
   routes: routes
 });
-//百度统计pv
-// router.afterEach(route => {
-//     _hmt.push(['_trackPageview', route.path]);
-// });
-// router.beforeEach((to, from, next) => {
-//   // ...
-//   console.log(to, from);
-// })
-// router.beforeEach((to, from, next) => {
-//     console.log(to, from);
-//     let toPath = to.path
-//     let fromPath = from.path
-//     console.log(`to: ${toPath} from: ${fromPath}`)
-//     if (toPath.replace(/[^/]/g, '').length > 1) {
-//         router.app.isIndex = false
-//     } else {
-//         let depath = toPath === '/' || toPath === '/invite' || toPath === '/rank'
-//         router.app.isIndex = depath ? 0 : 1
-//     }
-//     next()
-// })
 
 export default router;

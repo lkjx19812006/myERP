@@ -23,7 +23,7 @@
           </mu-list-item>
           <mu-list-item @click="close" :value="6" title="待报价采购单" slot="nested">
           </mu-list-item>
-          <mu-list-item @click="close" :value="7" title="我收到的报价" slot="nested">
+          <mu-list-item @click="close" to="/purchase/myReceivedOffer" :value="7" title="我收到的报价" slot="nested">
           </mu-list-item>
           <mu-list-item @click="close" :value="8" title="收到的全部报价" slot="nested">
           </mu-list-item>

@@ -93,6 +93,23 @@ var httpService = new Vue({
       var signStr = CryptoJS.HmacSHA1(str, _self.KEY).toString(CryptoJS.enc.Base64);
       return signStr;
     },
+    //过滤请求的数据
+    /*
+     *1.传入一个对象 自动过滤该对象 键所对应的值为空的情况
+     * 并返回一个 新对象
+     */
+    filterFormData(params){
+      if (params && typeof params == 'object') {
+        let obj = {};
+        Object.keys(params).forEach((item) => {
+          if (params[item] || params[item] === 0 || params[item] === false) obj[item] = params[item];
+        });
+        console.log(obj);
+        return obj;
+      } else {
+        return params;
+      }
+    },
     commonPost: function commonPost(url, data) {
       var _self = this;
       return new Promise(function (resolve, reject) {

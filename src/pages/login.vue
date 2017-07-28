@@ -51,7 +51,7 @@
                        fullWidth/>
       </div>
       <div class="item submit">
-        <mu-raised-button @click="submit" :label="$t('message.systemlogin')" class="demo-raised-button" primary
+        <mu-raised-button @click="submit" :label="$t('message.submit')" class="demo-raised-button" primary
                           fullWidth/>
       </div>
     </div>
