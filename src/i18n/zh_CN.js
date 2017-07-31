@@ -603,7 +603,9 @@ const zh_CN = {
     week_offer: '本周报价',
     filter: '筛选',
     reset: '重置',
-    customerPhone: '客户手机'
+    customerPhone: '客户手机',
+    please_enter_the_breedName: '请输入品种名称',
+    breed_name: '品种名称'
   }
 }
 export default zh_CN;

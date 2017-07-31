@@ -30,13 +30,7 @@
     text-align: center;
   }
 
-  .fade-enter-active, .fade-leave-active {
-    transition: left .4s;
-  }
 
-  .fade-enter, .fade-leave-to {
-    left: 480px;
-  }
 </style>
 <template>
   <div class="createOrder">

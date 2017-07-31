@@ -584,6 +584,8 @@ const en = {
     reset: 'Reset',
     customerName: 'customerName',
     customerPhone: 'customerPhone',
+    please_enter_the_breedName: 'Please Enter The Breed',
+    breed_name: 'Breed Name'
   }
 }
 export default en;

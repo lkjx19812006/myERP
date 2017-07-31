@@ -22,6 +22,9 @@
       }
     }
     .formData {
+      .title {
+        padding: 5px;
+      }
       .detail {
         padding: 0 13px;
         display: flex;
@@ -51,6 +54,15 @@
       <mu-raised-button slot="topAction" :label="$t('message.week_offer')" :primary="active === 'tswk' "
                         class="demo-flat-button"
                         @click="searchTime('tswk')"/>
+      <mu-raised-button slot="topAction" :label="$t('message.breed_name')"
+                        class="demo-flat-button"
+                        @click="isShowBreed = !isShowBreed"/>
+      <mu-raised-button slot="topAction" :label="$t('message.salesman')"
+                        class="demo-flat-button"
+                        @click="isShowCounterman = !isShowCounterman"/>
+      <mu-raised-button slot="topAction" :label="$t('message.address')"
+                        class="demo-flat-button"
+                        @click="isShowAddress = true"/>
       <!--用户信息-->
       <div class="searchItem" slot="contAction">
         <span>{{$t('message.customer_info')}}：</span>
@@ -78,6 +90,20 @@
                         :hintText="$t('message.end_time')"/>
       </div>
     </search>
+    <!--获取breedId组件-->
+    <breedId v-show="isShowBreed" v-on:getBreedId="getBreedId">
+      <mu-icon-button slot="close" @click="isShowBreed = !isShowBreed">
+        <i class="iconfont icon-close fz18"></i>
+      </mu-icon-button>
+    </breedId>
+    <!--获取业务员信息组件-->
+    <countermanId v-show="isShowCounterman">
+      <mu-icon-button slot="close" @click="isShowCounterman = !isShowCounterman">
+        <i class="iconfont icon-close fz18"></i>
+      </mu-icon-button>
+    </countermanId>
+    <!--选择地区组件-->
+    <myAddress v-show="isShowAddress" @close="isShowAddress = false"/>
     <!--栏目列-->
     <listItem :key="itemData.id" :itemData="itemData" v-for="itemData in listData">
       <!--通过未具名slot 分发 并将遍历到的值传递给详情组件显示-->
@@ -112,50 +138,50 @@
                         primary fullWidth/>
     </slidePage>
     <!--订单组件-->
-    <transition name="fade">
-      <createOrder v-show="showOrder">
-        <mu-appbar slot="header" class="mu-appbar" title="生成订单">
-          <mu-icon-button slot="left" @click="showOrder = false">
-            <i class="iconfont icon-close fz18"></i>
-          </mu-icon-button>
-        </mu-appbar>
-        <div class="formData" slot="formData">
+    <slidePage v-show="showOrder">
+      <mu-appbar slot="header" class="mu-appbar" title="生成订单">
+        <mu-icon-button slot="left" @click="showOrder = false">
+          <i class="iconfont icon-close fz18"></i>
+        </mu-icon-button>
+      </mu-appbar>
+      <div class="formData" slot="formData">
+        <div class="title">
           <myTitle title="商品信息"/>
-          <div class="detail">
-            <span class="tit">商品标题</span>
-            <mu-text-field class="inputClass" v-model="orderInfo.breedName"/>
-          </div>
-          <div class="detail">
-            <span class="tit">品种名称</span>
-            <mu-text-field class="inputClass" v-model="orderInfo.breedName"/>
-          </div>
-          <div class="detail">
-            <span class="tit">数量</span>
-            <mu-text-field class="inputClass" v-model="orderInfo.number"/>
-          </div>
-          <div class="detail">
-            <span class="tit">单位</span>
-            <mu-text-field class="inputClass" v-model="orderInfo.number"/>
-          </div>
-          <div class="detail">
-            <span class="tit">成本价</span>
-            <mu-text-field class="inputClass" v-model="orderInfo.number"/>
-          </div>
-          <div class="detail">
-            <span class="tit">质量</span>
-            <mu-text-field multiLine :rowsMax="3" class="inputClass" v-model="orderInfo.quality"/>
-          </div>
-          <div class="detail">
-            <span class="tit">产地</span>
-            <mu-text-field class="inputClass" v-model="orderInfo.number"/>
-          </div>
-          <div class="detail">
-            <span class="tit">规格</span>
-            <mu-text-field class="inputClass" v-model="orderInfo.spec"/>
-          </div>
         </div>
-      </createOrder>
-    </transition>
+        <div class="detail">
+          <span class="tit">商品标题</span>
+          <mu-text-field class="inputClass" v-model="orderInfo.breedName"/>
+        </div>
+        <div class="detail">
+          <span class="tit">品种名称</span>
+          <mu-text-field class="inputClass" v-model="orderInfo.breedName"/>
+        </div>
+        <div class="detail">
+          <span class="tit">数量</span>
+          <mu-text-field class="inputClass" v-model="orderInfo.number"/>
+        </div>
+        <div class="detail">
+          <span class="tit">单位</span>
+          <mu-text-field class="inputClass" v-model="orderInfo.number"/>
+        </div>
+        <div class="detail">
+          <span class="tit">成本价</span>
+          <mu-text-field class="inputClass" v-model="orderInfo.number"/>
+        </div>
+        <div class="detail">
+          <span class="tit">质量</span>
+          <mu-text-field multiLine :rowsMax="3" class="inputClass" v-model="orderInfo.quality"/>
+        </div>
+        <div class="detail">
+          <span class="tit">产地</span>
+          <mu-text-field class="inputClass" v-model="orderInfo.number"/>
+        </div>
+        <div class="detail">
+          <span class="tit">规格</span>
+          <mu-text-field class="inputClass" v-model="orderInfo.spec"/>
+        </div>
+      </div>
+    </slidePage>
     <!--刷新按钮-->
     <div class="refresh">
       <mu-float-button @click="refresh" mini class="demo-float-button">
@@ -171,7 +197,10 @@
   import pagination from '../../components/common/pagination.vue'
   import slidePage from '../../components/common/slidePage.vue'
   import offerInfo from '../../components/purchase/myUserOffer/offerInfo.vue'
-  import createOrder from  '../../components/purchase/myUserOffer/createOrder.vue'
+
+  import breedId from '../../components/common/breedId.vue'
+  import countermanId from '../../components/common/countermanId.vue'
+  import myAddress from '../../components/common/address.vue'
   import myTitle from '../../components/common/title.vue'
   import common from '../../common/httpService'
   export default{
@@ -185,6 +214,9 @@
         detail: {},
         showOrder: false,
         orderInfo: {},
+        isShowBreed: false,
+        isShowCounterman: false,
+        isShowAddress: false,
         pages: 0,
         timer: "",//定义动画时间,
         active: '',
@@ -200,7 +232,21 @@
     },
     watch: {
       //监听变化 改变window的内容高度 并动态设置即可 实现滚动企换
-      showOffer(newVal){
+      showOffer(newVal) {
+        if (!newVal) {
+          this.bodyAuto();
+        } else {
+          this.clearTime();
+        }
+      },
+      isShowBreed(newVal){
+        if (!newVal) {
+          this.bodyAuto();
+        } else {
+          this.clearTime();
+        }
+      },
+      isShowCounterman(newVal){
         if (!newVal) {
           this.bodyAuto();
         } else {
@@ -229,13 +275,19 @@
       pagination,
       slidePage,
       offerInfo,
-      createOrder,
+      breedId,
+      countermanId,
+      myAddress,
       myTitle
     },
     created(){
       this.getHttp();
     },
     methods: {
+      getBreedId(val){
+        //返回值中有 breedId
+        this.isShowBreed = !this.isShowBreed;
+      },
       //切换body高度为100vh 防止滚动
       clearTime(){
         clearTimeout(this.timer);
@@ -295,6 +347,7 @@
           loading.visible = false;
         })
       },
+
       //改变页码
       pageChange(page){
         this.httpParams.page = page;
@@ -323,20 +376,24 @@
             console.log(this.httpParams);
             break;
           case 'tswk':
-            let nowTime = new Date();
-            let nowWeek = nowTime.getDay();
+            var time = new Date();
+            var nowWeek = time.getDay();
+            console.log(nowWeek);
             var start = '';
             var end = '';
             //获取今天是周几 0周天 6是周6
             switch (nowWeek) {
               case 0:
-                end = new Date()
+                end = time
                 start = new Date(end.getTime() - 86400000 * 6);
                 break;
+              case 1:
+                start = new Date(time.getTime());
+                end = new Date(start.getTime() + 86400000 * 6);
+                break;
               default:
-                let time = new Date();
                 start = new Date(time.getTime() - 86400000 * (nowWeek - 1))
-                end = new Date(start.getTime() + 86400000 * (9 - nowWeek));
+                end = new Date(time.getTime() + 86400000 * (7 - nowWeek));
                 break;
             }
             this.httpParams.startTime = this.constructor.filter('formatBirth')(start);

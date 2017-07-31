@@ -31,6 +31,7 @@ Vue.prototype.$showImg = showImg;
 Vue.prototype.$dialog = dialog;
 
 import './assets/iconfont/iconfont.css'
+import './assets/css/base.less'
 import './assets/css/main.css'
 
 var app = new Vue({

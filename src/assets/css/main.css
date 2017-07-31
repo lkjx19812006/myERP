@@ -6,10 +6,13 @@ html, body {
   /*overflow-y: auto;*/
 }
 
-
 /*全局iconfont 大小*/
 .iconfont {
   font-size: 24px;
+}
+
+.fz14 {
+  font-size: 14px;
 }
 
 .fz16 {
@@ -31,3 +34,4 @@ html, body {
 .mr5 {
   margin-right: 5px;
 }
+

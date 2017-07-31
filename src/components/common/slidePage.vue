@@ -54,11 +54,11 @@
   }
 
   .fade-enter-active, .fade-leave-active {
-    transition: left .4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: all .45s cubic-bezier(0.785, 0.135, 0.15, 0.86);
   }
 
   .fade-enter, .fade-leave-to {
-    left: 480px;
+    transform: translate3d(480px, 0, 0);;
   }
 
   @media screen and(min-width: 480px) {

@@ -1,5 +1,6 @@
 import moment from 'moment'
-import address from '../static/data/region.json';
+// import address from '../static/data/region.json';
+
 export function host(url) {
   const host = url.replace(/^https?:\/\//, '').replace(/\/.*$/, '')
   const parts = host.split('.').slice(-3)
@@ -473,111 +474,112 @@ export function timeFormat(val) {
 }
 
 // 省市县三级联动处理 符合UI框架
-export function addressLinkage() {
-  let arr = [];
-  let p = address.p["000000"];
-  let c = address.c;
-  let d = address.d;
-  //先遍历每个省 填入数组中
-  // debugger;
-  for (let pp in p) {
-    let objP = {
-      value: '',
-      label: ''
-    }
-    objP.value = pp; //赋值键
-    objP.label = p[pp]; //赋值值
-    if (c[pp]) {
-      objP.children = [];
-    }
-    //遍历省对应 的所有市
-    for (let cc in c[pp]) {
-      let objC = {
-        value: '',
-        label: ''
-      }
-      if (d[cc]) {
-        objC.children = [];
-      }
-      objC.value = cc;
-      objC.label = c[pp][cc];
-      objP.children.push(objC);
-      //遍历所有的县
-      for (let dd in d[cc]) {
-        let objD = {
-          value: '',
-          label: '',
-        }
-        objD.value = dd;
-        objD.label = d[cc][dd];
-        objC.children.push(objD);
-      }
+// export function addressLinkage() {
+//   let arr = [];
+//   let p = address.p["000000"];
+//   let c = address.c;
+//   let d = address.d;
+//   //先遍历每个省 填入数组中
+//   // debugger;
+//   for (let pp in p) {
+//     let objP = {
+//       value: '',
+//       label: ''
+//     }
+//     objP.value = pp; //赋值键
+//     objP.label = p[pp]; //赋值值
+//     if (c[pp]) {
+//       objP.children = [];
+//     }
+//     //遍历省对应 的所有市
+//     for (let cc in c[pp]) {
+//       let objC = {
+//         value: '',
+//         label: ''
+//       }
+//       if (d[cc]) {
+//         objC.children = [];
+//       }
+//       objC.value = cc;
+//       objC.label = c[pp][cc];
+//       objP.children.push(objC);
+//       //遍历所有的县
+//       for (let dd in d[cc]) {
+//         let objD = {
+//           value: '',
+//           label: '',
+//         }
+//         objD.value = dd;
+//         objD.label = d[cc][dd];
+//         objC.children.push(objD);
+//       }
+//
+//     }
+//     arr.push(objP);
+//   }
+//   return arr;
+// }
+// // 过滤省市县
+// export function getPCD() {
+//   // 通过数组获得省市县的文字 并返回
+//   // debugger;
+//   let ls = arguments.length;
+//   let arr = arguments;
+//   let p = address.p["000000"];
+//   let c = address.c;
+//   let d = address.d;
+//   let str = ''
+//   if (Number(arr[0]) > 0 && ls >= 1) {
+//     str = p[arr[0]]
+//
+//     if (Number(arr[1]) > 0 && ls >= 2) {
+//
+//       str += '/' + c[arr[0]][arr[1]];
+//
+//       if (Number(arr[2]) > 0 && ls >= 3) {
+//
+//         str += '/' + d[arr[1]][arr[2]];
+//
+//       }
+//     }
+//
+//   }
+//   return str;
+// }
+// //又省市区汉字变成编码形式
+// export function pcdTrans(arr) {
+//   let myArr = [];
+//   let p = address.p["000000"];
+//   let c = address.c;
+//   let d = address.d;
+//   let cp = '';
+//   let cc = '';
+//   let cd = '';
+//   for (var item in p) {
+//     if (p[item] == arr[0]) {
+//       cp = item;
+//       myArr.push(cp);
+//     }
+//   }
+//   if (cp) {
+//     for (var key in c[cp]) {
+//       if (c[cp][key] == arr[1]) {
+//         cc = key;
+//         myArr.push(cc);
+//       }
+//     }
+//   }
+//   if (cc) {
+//     for (var key in d[cc]) {
+//       if (d[cc][key] == arr[2]) {
+//         cd = key;
+//         myArr.push(cd)
+//       }
+//     }
+//   }
+//   return myArr;
+// }
 
-    }
-    arr.push(objP);
-  }
-  return arr;
-}
-// 过滤省市县
-export function getPCD() {
-  // 通过数组获得省市县的文字 并返回
-  // debugger;
-  let ls = arguments.length;
-  let arr = arguments;
-  let p = address.p["000000"];
-  let c = address.c;
-  let d = address.d;
-  let str = ''
-  if (Number(arr[0]) > 0 && ls >= 1) {
-    str = p[arr[0]]
-
-    if (Number(arr[1]) > 0 && ls >= 2) {
-
-      str += '/' + c[arr[0]][arr[1]];
-
-      if (Number(arr[2]) > 0 && ls >= 3) {
-
-        str += '/' + d[arr[1]][arr[2]];
-
-      }
-    }
-
-  }
-  return str;
-}
-//又省市区汉字变成编码形式
-export function pcdTrans(arr) {
-  let myArr = [];
-  let p = address.p["000000"];
-  let c = address.c;
-  let d = address.d;
-  let cp = '';
-  let cc = '';
-  let cd = '';
-  for (var item in p) {
-    if (p[item] == arr[0]) {
-      cp = item;
-      myArr.push(cp);
-    }
-  }
-  if (cp) {
-    for (var key in c[cp]) {
-      if (c[cp][key] == arr[1]) {
-        cc = key;
-        myArr.push(cc);
-      }
-    }
-  }
-  if (cc) {
-    for (var key in d[cc]) {
-      if (d[cc][key] == arr[2]) {
-        cd = key;
-        myArr.push(cd)
-      }
-    }
-  }
-  return myArr;
-}
 //把时间转换为距离今天的天数
 export function getDay(myDate) {
   let toDay = new Date();
