@@ -128,14 +128,15 @@
           <i class="iconfont icon-close fz18"></i>
         </mu-icon-button>
       </mu-appbar>
-      <offerInfo slot="content" :detail="detail"/>
-      <!--这里连接到生成订单模块-->
-      <mu-raised-button slot="action"
-                        style="margin: 20px 10px;"
-                        label="生成订单"
-                        class="demo-raised-button"
-                        @click="showOrder = true"
-                        primary fullWidth/>
+      <offerInfo slot="content" :detail="detail">
+        <mu-raised-button
+          slot="action"
+          style="margin: 10px 0;"
+          label="生成订单"
+          class="demo-raised-button"
+          @click="showOrder = true"
+          primary fullWidth/>
+      </offerInfo>
     </slidePage>
     <!--订单组件-->
     <slidePage v-show="showOrder">

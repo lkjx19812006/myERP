@@ -88,6 +88,9 @@
       <span class="info">{{detail.description}}</span>
     </div>
     <mu-divider/>
+    <div class="detail">
+      <slot name="action"></slot>
+    </div>
   </mu-paper>
 </template>
 <script>
