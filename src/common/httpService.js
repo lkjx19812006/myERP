@@ -111,6 +111,11 @@ var httpService = new Vue({
       }
     },
     commonPost: function commonPost(url, data) {
+      url = this.addSID(url);
+      data.version = this.version;
+      let localTime = new Date().getTime();
+      data.time = localTime + this.difTime;
+      data.sign = this.getSign('biz_module=' + data.biz_module + '&biz_method=' + data.biz_method + '&time=' + data.time);
       var _self = this;
       return new Promise(function (resolve, reject) {
         axios({method: 'post', url: url, data: data}).then(function (response) {
@@ -127,7 +132,7 @@ var httpService = new Vue({
             }
           }
         }).catch(function (error) {
-          // if (!process.BROWSER_BUILD) 浏览器环境 暂时用不到
+          console.log(error);
           if (error.response !== undefined && error.response !== '') {
             if (error.response.status === 403 || error.response.status === 408) {
               window.localStorage.KEY = '';
@@ -136,19 +141,10 @@ var httpService = new Vue({
               _self.SID = '';
               window.location.href = '/login';
             }
-            ;
           }
-          ;
           reject(error);
-          /*if (!process.BROWSER_BUILD) {
-           } else {
-           _self.$message({
-           type: 'info',
-           message: '操作失败'
-           });
-           }*/
-        });
-      });
+        })
+      })
     },
     commonGet: function commonGet(url) {
       return new Promise(function (resolve, reject) {

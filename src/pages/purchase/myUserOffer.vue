@@ -329,12 +329,6 @@
           biz_method: 'queryMySendOffer',
           biz_param: common.filterFormData(this.httpParams)
         };
-        url = common.addSID(url);
-        console.log(url);
-        body.version = common.version;
-        let localTime = new Date().getTime();
-        body.time = localTime + common.difTime;
-        body.sign = common.getSign('biz_module=' + body.biz_module + '&biz_method=' + body.biz_method + '&time=' + body.time);
         common.commonPost(url, body).then((suc) => {
           loading.visible = false;
           this.listData = suc.biz_result.list;
@@ -348,7 +342,6 @@
           loading.visible = false;
         })
       },
-
       //改变页码
       pageChange(page){
         this.httpParams.page = page;
