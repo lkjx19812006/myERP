@@ -20,7 +20,7 @@
     }
     .content {
       flex: 1;
-      font-size: 16px;
+      font-size: 12px;
       background-color: #fff;
       height: 40px;
       line-height: 40px;

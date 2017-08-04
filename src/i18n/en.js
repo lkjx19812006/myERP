@@ -585,7 +585,10 @@ const en = {
     customerName: 'customerName',
     customerPhone: 'customerPhone',
     please_enter_the_breedName: 'Please Enter The Breed',
-    breed_name: 'Breed Name'
+    breed_name: 'Breed Name',
+    file_upload: 'File Upload',
+    file_format_error: 'File Format Error',
+    file_too_large: 'File Too Large'
   }
 }
 export default en;

@@ -34,6 +34,7 @@
     },
     data(){
       return {
+        key: '',
         src: null,
         size: 0,
         isShowPro: false,
@@ -59,7 +60,7 @@
           if (input.files[0].size > 3036000) {
             this.$message({
               showClose: false,
-              message: '上传图片过大'
+              message: '图片大小在3M以内'
             })
           } else {
             //创建一个文件读取对象
@@ -67,7 +68,7 @@
             //文件读取对象 读取完毕后
             reader.onload = function (e) {
               //图片大小 大于200kb压缩
-              if (e.total > 0) {
+              if (e.total > 204800) {
                 let img = new Image()
                 img.src = e.target.result;
                 img.onload = () => {
@@ -80,7 +81,6 @@
               }
 
             }
-            console.log(input.files[0])
             reader.readAsDataURL(input.files[0])
           }
         }
@@ -125,7 +125,7 @@
               this.$refs.imgInput.value = ''
             }
           }
-          let url = `http://upload.qiniu.com/putb64/${this.size} `
+          let url = `http://upload.qiniu.com/putb64/${this.size}`
           xhr.open("POST", url, true)
           xhr.setRequestHeader("Content-Type", "application/octet-stream")
           xhr.setRequestHeader("Authorization", `UpToken ${result.biz_result.token}`)
@@ -183,6 +183,7 @@
   .uploadImg {
     height: 100%;
     width: 100%;
+    padding: 5px;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -191,17 +192,15 @@
     .img_wrap {
       height: 100%;
       width: 100%;
-      box-sizing: border-box;
-      padding: 5px;
-      overflow: hidden;
       border-radius: 5px;
+      overflow: hidden;
       position: relative;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       img {
-        width: 100%;
+        max-width: 100%;
         border: 0;
         outline: none;
         display: block;
@@ -209,7 +208,7 @@
       }
     }
     .line-X, .line-Y {
-      width: 30%;
+      width: 30px;
       height: 4px;
       background-color: #909090;
       position: absolute;
@@ -221,7 +220,7 @@
       border-radius: 2px;
     }
     .line-Y {
-      height: 30%;
+      height: 30px;
       width: 4px;
     }
     .imgInput {

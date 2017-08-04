@@ -605,7 +605,10 @@ const zh_CN = {
     reset: '重置',
     customerPhone: '客户手机',
     please_enter_the_breedName: '请输入品种名称',
-    breed_name: '品种名称'
+    breed_name: '品种名称',
+    file_upload: '文件上传',
+    file_format_error: '文件格式错误',
+    file_too_large: '文件过大'
   }
 }
 export default zh_CN;
