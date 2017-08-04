@@ -5,10 +5,11 @@ let instance;
 
 var ShowImg = function (options) {
   if (Vue.prototype.$isServer) return;
-  options = options || [];
+  options = options || {};
   if (typeof options === 'string') {
     options = {
-      imgList: [options]
+      imgList: [options],
+      activeIndex: 0
     };
   }
   //创建一个 vue 的实例对象

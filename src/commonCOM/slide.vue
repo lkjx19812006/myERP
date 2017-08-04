@@ -60,6 +60,10 @@
       imgList: {
         type: Array,
         default: () => ([])
+      },
+      activeIndex: {
+        type: Number,
+        default: 0
       }
     },
     data(){
@@ -76,15 +80,16 @@
         directionY: 1,//y方向 暂时不做处理
         right: 0,//定义三个下标 左
         center: 0,//定义三个下标 中
-        left: 1//定义三个下标 右
+        left: 0//定义三个下标 右
       }
     },
     mounted(){
-      //初始化图片位置
       //获取外面盒子宽度 最少三张图片
       if (this.imgList.length > 0) {
-        this.right = this.imgList.length - 1;
         this.wrapWidth = this.$refs.wrap.offsetWidth;
+        //初始化图片位置
+        this.initIndex()
+
         switch (this.imgList.length) {
           case 1:
             this.$refs['item' + this.center][0].style.transform = 'translate3d(0, 0, 0)';
@@ -102,6 +107,26 @@
       }
     },
     methods: {
+      //初始化下标
+      initIndex(){
+        switch (this.activeIndex) {
+          case 0:
+            this.right = this.imgList.length - 1;
+            this.center = 0;
+            this.left = 1;
+            break;
+          case this.imgList.length - 1:
+            this.right = this.imgList.length - 2;
+            this.center = this.imgList.length - 1;
+            this.left = 0;
+            break;
+          default:
+            this.right = this.activeIndex - 1;
+            this.center = this.activeIndex;
+            this.left = this.activeIndex + 1;
+            break;
+        }
+      },
       touchstart(event){
         //记录当前点击位置
         this.pageX = event.changedTouches[0].pageX;
@@ -202,12 +227,12 @@
             break;
           case 2:
             this.$refs['item' + this.center][0].style.transform = 'translate3d(' + x + 'px, 0, 0)';
-            this.$refs['item' + this.left][0].style.transform = 'translate3d(' + (this.wrapWidth + x) + 'px, 0, 0)';
+            this.$refs['item' + this.left][0].style.transform = 'translate3d(' + (this.wrapWidth * 1.1 + x) + 'px, 0, 0)';
             break;
           default:
-            this.$refs['item' + this.right][0].style.transform = 'translate3d(' + (x - this.wrapWidth) + 'px, 0, 0)';
+            this.$refs['item' + this.right][0].style.transform = 'translate3d(' + (x - this.wrapWidth * 1.1) + 'px, 0, 0)';
             this.$refs['item' + this.center][0].style.transform = 'translate3d(' + x + 'px, 0, 0)';
-            this.$refs['item' + this.left][0].style.transform = 'translate3d(' + (this.wrapWidth + x) + 'px, 0, 0)';
+            this.$refs['item' + this.left][0].style.transform = 'translate3d(' + (this.wrapWidth * 1.1 + x) + 'px, 0, 0)';
             break;
         }
       },

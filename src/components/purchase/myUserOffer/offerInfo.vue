@@ -78,7 +78,7 @@
     <mu-divider/>
     <!--这里存放报价的资源图片 没列最多3个-->
     <div class="detail img_wrap">
-      <div class="img_item" @click="$showImg({imgList:imgList})" v-for="item in imgList">
+      <div class="img_item" @click="$showImg({imgList:imgList, activeIndex:index})" v-for="item,index in imgList">
         <img :src="item">
       </div>
     </div>

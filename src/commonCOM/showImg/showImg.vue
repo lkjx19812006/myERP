@@ -20,7 +20,7 @@
   <transition>
     <div @click="visible = false" :style="{'background-color': 'rgba(0, 0, 0,'+ opacity + ')'}" class="showImg"
          v-show="visible">
-      <slide :imgList="imgList" v-if="imgList.length > 0"/>
+      <slide :imgList="imgList" :activeIndex="activeIndex" v-if="imgList.length > 0"/>
     </div>
   </transition>
 </template>
@@ -31,6 +31,7 @@
       return {
         visible: true,
         src: '',
+        activeIndex: 0,
         imgList: [],
         opacity: .8
       }
