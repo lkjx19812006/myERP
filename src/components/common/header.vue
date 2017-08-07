@@ -70,10 +70,6 @@
           biz_module: 'userService',
           biz_method: 'getCmsUserInfo'
         }
-        url = common.addSID(url);
-        body.version = common.version;
-        body.time = Date.parse(new Date()) + parseInt(common.difTime);
-        body.sign = common.getSign('biz_module=' + body.biz_module + '&biz_method=' + body.biz_method + '&time=' + body.time);
         this.$store.dispatch('getUserInfor', {
           body: body,
           path: url

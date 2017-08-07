@@ -59,10 +59,10 @@
                         @click="isShowBreed = !isShowBreed"/>
       <mu-raised-button slot="topAction" :label="$t('message.salesman')"
                         class="demo-flat-button"
-                        @click="isShowCounterman = !isShowCounterman"/>
+                        @click="$router.push(`${$route.path}?page=salesman`)"/>
       <mu-raised-button slot="topAction" :label="$t('message.address')"
                         class="demo-flat-button"
-                        @click="isShowAddress = true"/>
+                        @click="$router.push(`${$route.path}?page=address`)"/>
       <!--用户信息-->
       <div class="searchItem" slot="contAction">
         <span>{{$t('message.customer_info')}}：</span>
@@ -97,13 +97,9 @@
       </mu-icon-button>
     </breedId>
     <!--获取业务员信息组件-->
-    <countermanId v-show="isShowCounterman">
-      <mu-icon-button slot="close" @click="isShowCounterman = !isShowCounterman">
-        <i class="iconfont icon-close fz18"></i>
-      </mu-icon-button>
-    </countermanId>
+    <countermanId v-show="pathHash.page === 'salesman'" @selected="counterSelect"/>
     <!--选择地区组件-->
-    <myAddress v-show="isShowAddress" @close="isShowAddress = false"/>
+    <myAddress v-show="pathHash.page === 'address'" @close="isShowAddress = false"/>
     <!--栏目列-->
     <listItem :key="itemData.id" :itemData="itemData" v-for="itemData in listData">
       <!--通过未具名slot 分发 并将遍历到的值传递给详情组件显示-->
@@ -122,9 +118,9 @@
                 @pageSizeChange="pageSizeChange"
                 @pageChange="pageChange"/>
     <!--详情页组件-->
-    <slidePage v-show="showOffer">
+    <slidePage v-show="pathHash.page === 'listInfo' ">
       <mu-appbar slot="header" class="mu-appbar" title="报价详情">
-        <mu-icon-button slot="left" @click="showOffer = false">
+        <mu-icon-button slot="left" @click="$router.back()">
           <i class="iconfont icon-close fz18"></i>
         </mu-icon-button>
       </mu-appbar>
@@ -134,14 +130,14 @@
           style="margin: 10px 0;"
           label="生成订单"
           class="demo-raised-button"
-          @click="showOrder = true"
+          @click="showOrderInfo()"
           primary fullWidth/>
       </offerInfo>
     </slidePage>
     <!--订单组件-->
-    <slidePage v-show="showOrder">
+    <slidePage v-show="pathHash.page === 'offer'">
       <mu-appbar slot="header" class="mu-appbar" title="生成订单">
-        <mu-icon-button slot="left" @click="showOrder = false">
+        <mu-icon-button slot="left" @click="$router.back()">
           <i class="iconfont icon-close fz18"></i>
         </mu-icon-button>
       </mu-appbar>
@@ -233,36 +229,43 @@
     },
     watch: {
       //监听变化 改变window的内容高度 并动态设置即可 实现滚动企换
-      showOffer(newVal) {
-        if (!newVal) {
+      $route(newVal) {
+        if (newVal.query !== {}) {
           this.bodyAuto();
         } else {
           this.clearTime();
         }
       },
-      isShowBreed(newVal){
-        if (!newVal) {
-          this.bodyAuto();
-        } else {
-          this.clearTime();
-        }
-      },
-      isShowCounterman(newVal){
-        if (!newVal) {
-          this.bodyAuto();
-        } else {
-          this.clearTime();
-        }
-      },
-      showOrder(newVal){
-        if (!newVal && this.showOffer === false) {
-          this.bodyAuto();
-        } else {
-          this.clearTime();
-        }
-      }
+//      isShowBreed(newVal){
+//        if (!newVal) {
+//          this.bodyAuto();
+//        } else {
+//          this.clearTime();
+//        }
+//      },
+//      isShowCounterman(newVal){
+//        if (!newVal) {
+//          this.bodyAuto();
+//        } else {
+//          this.clearTime();
+//        }
+//      },
+//      showOrder(newVal){
+//        if (!newVal && this.showOffer === false) {
+//          this.bodyAuto();
+//        } else {
+//          this.clearTime();
+//        }
+//      }
     },
     computed: {
+      pathHash(){
+        if (this.$route.query !== {}) {
+          console.log(this.$route.query)
+          return this.$route.query
+        }
+        return {}
+      },
       scrollTop(){
         return this.$store.state.common.scrollTop;
       },
@@ -282,9 +285,13 @@
       myTitle
     },
     created(){
-      this.getHttp();
+      console.log(this.$router)
+//      this.getHttp();
     },
     methods: {
+      counterSelect(item){
+        console.log(item)
+      },
       getBreedId(val){
         //返回值中有 breedId
         this.isShowBreed = !this.isShowBreed;
@@ -305,8 +312,11 @@
       },
       //显示详情页组件
       showInfo(itemData){
+        //储存 滚动高度
         let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
         this.$store.dispatch('setScrollTop', scrolltop);
+        this.$router.push(`${this.$route.path}?page=listInfo`);
+
         this.detail = itemData;
         this.orderInfo = itemData;
         this.showOffer = true;
@@ -315,6 +325,7 @@
       showOrderInfo(itemData){
         let scrolltop = document.documentElement.scrollTop || document.body.scrollTop;
         this.$store.dispatch('setScrollTop', scrolltop);
+        this.$router.push(`${this.$route.path}?page=offer`);
         this.orderInfo = itemData;
         this.showOrder = true;
       },
@@ -333,11 +344,6 @@
           loading.visible = false;
           this.listData = suc.biz_result.list;
           this.pages = suc.biz_result.pages;
-          //成功的msg
-//          this.$message({
-//            type: 'success',
-//            message: suc.msg
-//          })
         }, (err) => {
           loading.visible = false;
         })

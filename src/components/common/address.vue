@@ -79,7 +79,7 @@
         if (this.step >= 1) {
           this.countStep();
         } else {
-          this.$emit('close');
+          this.$router.back()
           this.step = 1
         }
       },
