@@ -11,7 +11,6 @@ function resolve(dir) {
 module.exports = {
     entry: {
         app: ['babel-polyfill', './src/main.js'],
-        // vendors: ['element-ui']
     },
     output: {
         path: config.build.assetsRoot,

@@ -127,7 +127,8 @@
           _self.setCookie('SID', common.SID);
           common.getDate(
             function () {
-              let url = common.urlCommon + common.apiUrl.most
+//              let url = common.urlCommon + common.apiUrl.most
+              let url="http://192.168.1.142/front/account/erpLogin.do"
               let body = {
                 biz_module: 'userService',
                 biz_method: 'getCmsUserInfo'

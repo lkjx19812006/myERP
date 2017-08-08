@@ -7,6 +7,7 @@ var vendors = [
     'vuex',
     'vue-router',
     'axios',
+    'muse-ui'
     // ...其它库
 ];
 var date = new Date().getTime();
@@ -15,7 +16,7 @@ fs.readFile('./index.prod.html', 'utf8', (err, data) => {
     if (!err) {
         var dataStr = data.toString();
         var Reg = /<script src="\/Dll\d*.js"><\/script>/g;
-        dataStr = dataStr.replace(Reg, '<script src="/Dll' + date + '.js"></script>');
+        dataStr = dataStr.replace(Reg, '<script src="./Dll' + date + '.js"></script>');
         fs.writeFile('./index.prod.html', dataStr, (error) => {
             if (!error) {
                 console.log('Script tag insert successfully');
@@ -39,7 +40,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DllPlugin({
-            path: path.join(__dirname, "../dist", "manifest.json"),
+            path: path.join(__dirname, "../dist", "DLLconfig.json"),
             name: "[name]_[hash]",
             context: __dirname
         }),

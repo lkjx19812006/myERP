@@ -44,7 +44,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         }),
         new webpack.DllReferencePlugin({
             context: __dirname,
-            manifest: require(config.build.assetsRoot + '/manifest.json')
+            manifest: require(config.build.assetsRoot + '/DLLconfig.json')
         }),
         // Compress extracted CSS. We are using this plugin so that possible
         // duplicated CSS from different components can be deduped.
