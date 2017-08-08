@@ -158,3 +158,19 @@ var httpService = new Vue({
   }
 });
 export default httpService;
+
+// getUnit() {
+//   let _self = this;
+//   common.commonPost(common.urlCommon + common.apiUrl.most, {
+//     biz_module: 'enumService',
+//     biz_method: 'queryEnumList',
+//     biz_param: {
+//       type: 'MU'
+//     }
+//   }).then(function (suc) {
+//     _self.unit = suc.biz_result.list;
+//     if (!_self.$route.params.id) _self.ruleForm.unit = _self.unit[2].id;
+//     _self.ruleForm.sampleUnit = _self.unit[0].id;
+//   }).catch(function (err) {
+//   })
+// },

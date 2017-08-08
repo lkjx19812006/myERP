@@ -15,6 +15,12 @@ let routes = [{
 }, {
   path: '/home',
   component: resolve => require(['../pages/home.vue'], resolve)
+},{
+  path: '/purchase/example',
+  component: resolve => require(['../pages/purchase/example.vue'], resolve)
+},{
+  path: '/purchase/example2',
+  component: resolve => require(['../pages/purchase/example2.vue'], resolve)
 }, {
   path: '/purchase/myUserOffer',
   component: resolve => require(['../pages/purchase/myUserOffer.vue'], resolve)

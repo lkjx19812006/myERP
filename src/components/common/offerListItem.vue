@@ -2,12 +2,11 @@
   @import '../../assets/css/base.less';
 
   .listItem {
-    margin-bottom: 20px;
-    padding: 10px 5px;
+    padding: 10px 10px;
     .mu-paper {
       font-size: 16px;
       > div {
-        padding: 5px 0;
+        padding: 10px 0;
         padding: 10px;
       }
       .title {
@@ -15,13 +14,15 @@
         flex-direction: row;
         justify-content: space-between;
         .breedName {
-          color: @color;
+          color: #333;
         }
-
       }
       .customer {
         .customerName {
-          color: @color;
+          color: #333;
+        }
+        .customerPhone {
+          margin-left: 10px;
         }
       }
       .price {
@@ -29,17 +30,11 @@
         flex-direction: row;
         justify-content: space-between;
       }
-      .action {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-      }
     }
   }
 </style>
 <template>
-  <div class="listItem">
+  <div class="listItem" v-on:click="click">
     <mu-paper class="demo-paper" :zDepth="2">
       <div class="title">
         <span class="time">{{itemData.otime}}</span>
@@ -50,9 +45,6 @@
         <div>
           <span>报价供应商：</span>
           <span class="customerName">{{itemData.offerCustomerName}}</span>
-        </div>
-        <div style="padding: 5px 0">
-          <span>联系方式：</span>
           <a type="tel" class="customerPhone">{{itemData.offerCustomerPhone}}</a>
         </div>
       </div>
@@ -62,20 +54,8 @@
           <span>报价：</span>
           <span style="color: #F38300">{{itemData.price}}</span>
         </div>
-        <div>
-          <span>库存：</span>
-          <span>{{itemData.number}}（{{itemData.unit | idToUnit}}）</span>
-        </div>
       </div>
       <mu-divider/>
-      <div class="description">
-        <span>报价备注：</span>
-        <span>{{itemData.description}}</span>
-      </div>
-      <mu-divider/>
-      <div class="action">
-        <slot></slot>
-      </div>
     </mu-paper>
   </div>
 </template>
@@ -89,6 +69,11 @@
     },
     data(){
       return {}
+    },
+    methods: {
+      click(){
+        this.$emit('click')
+      }
     }
   }
 </script>

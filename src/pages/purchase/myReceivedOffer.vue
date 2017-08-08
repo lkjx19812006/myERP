@@ -1,61 +1,39 @@
-<style scoped lang="less">
-  .myReceivedOffer {
-    width: 100%;
+<style lang="less" scoped>
+  .myUserOffer {
 
-    .img_upload_wrap {
-      height: 100px;
-      width: 240px;
-      background-color: #f0f0f0;
-      border: 1px dashed #d0d0d0;
-      border-radius: 5px;
-      margin: 100px auto;
-    }
-    .file_upload_wrap {
-      height: 36px;
-      width: 150px;
-      border: 1px solid #d0d0d0;
-      border-radius: 5px;
-      margin: 50px auto;
-    }
   }
 </style>
 <template>
-  <!--我收到的报价-->
-  <div class="myReceivedOffer">
-    <div class="img_upload_wrap">
-      <uploadImg @postUrl="getPostUrl" :params="{index:1}"/>
-    </div>
-    <div class="file_upload_wrap">
-      <uploadFile @postUrl="getUrlList"/>
-    </div>
-    <div class="fileList">
-      <div class="item" v-for="item in fileUrlList">
-        <span>{{item.name}}</span>
-        <a :href="item.url">下载地址</a>
-      </div>
-    </div>
+  <div class="myUserOffer">
+    <search :more='true' v-on:reset="resetHttp" v-on:search="searchHttp"/>
   </div>
 </template>
 <script>
-  import uploadImg from  '../../components/common/uploadImg.vue'
-  import uploadFile from '../../components/common/uploadFile.vue'
+  import search from '../../components/common/search.vue'
   export default {
     data(){
-      return {
-        fileUrlList: []
-      }
+      return {}
     },
     components: {
-      uploadImg,
-      uploadFile
+      search
     },
     methods: {
-      getPostUrl(params){
-        console.log(params);
+      //重置
+      resetHttp(){
+        this.active = '';
+        this.httpParams = {
+          page: 1,
+          pageSize: 15,
+          startTime: '',
+          endTime: '',
+          fullname: '',
+          userPhone: '',
+        }
+        this.getHttp();
       },
-      getUrlList(params){
-        this.fileUrlList = [...this.fileUrlList, params]
-        console.log(params)
+      //搜索
+      searchHttp(){
+        this.getHttp();
       }
     }
   }

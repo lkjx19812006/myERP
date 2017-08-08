@@ -14,10 +14,34 @@
   </transition>
 </template>
 <script>
+  //动画开始完成后固定body 高度
+  //离开动画开始前 释放 body 高度
+  //点击的时候记录在vuex中 暂时先放这里 有滚动问题再处理
   export default {
     props: {},
+    computed: {
+      scrollTop(){
+        return this.$store.state.common.scrollTop;
+      },
+    },
     data(){
       return {}
+    },
+    methods: {
+      //切换body高度为100vh 防止滚动
+      clearTime(){
+        clearTimeout(this.timer);
+        //获取屏幕的高度
+        this.timer = setTimeout(function () {
+          document.body.style.height = '100vh';
+        }, 600);
+      },
+      //切换body高度为自适应 让其滚动到记录位置
+      bodyAuto(){
+        document.body.style.height = 'auto';
+        document.body.scrollTop = this.scrollTop;
+        document.documentElement.scrollTop = this.scrollTop;
+      },
     }
   }
 </script>
@@ -54,7 +78,7 @@
   }
 
   .fade-enter-active, .fade-leave-active {
-    transition: all .6s cubic-bezier(0.075, 0.2, 0.35, 1);
+    transition: all .7s;
   }
 
   .fade-enter, .fade-leave-to {
