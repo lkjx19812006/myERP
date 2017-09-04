@@ -1,6 +1,6 @@
 <template>
   <div class="uploadFile" ref="upload">
-    <img class="img_svg" src="../../assets/images/upload.svg">
+    <img class="img_svg" src="../../../static/images/upload.svg">
     <span>{{$t('message.file_upload')}}</span>
     <input @change="previewFile"
            class="fileInput" ref="file" type="file">

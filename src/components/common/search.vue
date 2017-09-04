@@ -1,5 +1,5 @@
 <style lang="less" scoped>
-  @import '../../assets/css/base.less';
+  @import '../../../static/css/base.less';
 
   .search {
     width: 100%;

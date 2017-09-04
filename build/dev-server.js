@@ -46,13 +46,13 @@ compiler.plugin('compilation', function (compilation) {
 })
 
 // proxy api requests 反向代理API 在config 中配置即可
-Object.keys(proxyTable).forEach(function (context) {
-  var options = proxyTable[context]
-  if (typeof options === 'string') {
-    options = {target: options}
-  }
-  app.use(proxyMiddleware(options.filter || context, options))
-})
+// Object.keys(proxyTable).forEach(function (context) {
+//   var options = proxyTable[context]
+//   if (typeof options === 'string') {
+//     options = {target: options}
+//   }
+//   app.use(proxyMiddleware(options.filter || context, options))
+// })
 
 // handle fallback for HTML5 history API
 // h5的 history模式

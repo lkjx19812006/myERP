@@ -42,10 +42,10 @@ var webpackConfig = merge(baseWebpackConfig, {
         new ExtractTextPlugin({
             filename: utils.assetsPath('css/[name].[contenthash].css')
         }),
-        new webpack.DllReferencePlugin({
-            context: __dirname,
-            manifest: require(config.build.assetsRoot + '/DLLconfig.json')
-        }),
+        // new webpack.DllReferencePlugin({
+        //     context: __dirname,
+        //     manifest: require(config.build.assetsRoot + '/DLLiconfig.json')
+        // }),
         // Compress extracted CSS. We are using this plugin so that possible
         // duplicated CSS from different components can be deduped.
         new OptimizeCSSPlugin({
@@ -58,7 +58,7 @@ var webpackConfig = merge(baseWebpackConfig, {
         // see https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
             filename: config.build.index,
-            template: 'index.prod.html',
+            template: 'index.html',
             inject: true,
             minify: {
                 removeComments: true,
@@ -71,7 +71,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             chunksSortMode: 'dependency'
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: ['app', 'vendors'], //将公共模块提出
+            name: ['app'], //将公共模块提出
             minChunks: Infinity //提取所有entry 共同依赖的模块
         }),
         // copy custom static assets

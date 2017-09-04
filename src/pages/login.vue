@@ -1,5 +1,5 @@
 <style scoped lang="less">
-  @import '../assets/css/base.less';
+  @import '../../static/css/base.less';
 
   .login {
     width: 100%;
@@ -127,8 +127,7 @@
           _self.setCookie('SID', common.SID);
           common.getDate(
             function () {
-//              let url = common.urlCommon + common.apiUrl.most
-              let url="http://192.168.1.142/front/account/erpLogin.do"
+              let url = common.urlCommon + common.apiUrl.most
               let body = {
                 biz_module: 'userService',
                 biz_method: 'getCmsUserInfo'

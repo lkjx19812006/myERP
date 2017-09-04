@@ -1,5 +1,5 @@
 <style scoped lang="less">
-  @import '../../assets/css/base.less';
+  @import '../../../static/css/base.less';
 
   .myUserOffer {
     .demo-raised-button {

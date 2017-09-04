@@ -1,5 +1,5 @@
 <style lang="less" scoped>
-  @import '../../assets/css/base.less';
+  @import '../../../static/css/base.less';
 
   .userInfo {
     .userTitle {
@@ -46,7 +46,7 @@
       <mu-appbar class="userTitle" :title="$t('message.userInfo')"/>
       <mu-list>
         <mu-paper class="demo-paper" circle :zDepth="4">
-          <img src="../../assets/images/userImg.png">
+          <img src="../../../static/images/userImg.png">
         </mu-paper>
         <div class="item">
           <mu-select-field @change="changeLanguage" v-model="language" fullWidth>

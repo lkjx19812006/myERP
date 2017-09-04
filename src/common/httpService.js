@@ -6,7 +6,7 @@ import CryptoJS from "crypto-js"
 var httpService = new Vue({
   data: {
     customerId: '',
-    urlCommon: '/front',
+    urlCommon: 'http://192.168.1.103:8080/front',
     language: window.localStorage.language,
     KEY: window.localStorage.KEY,
     SID: window.localStorage.SID,
@@ -111,6 +111,7 @@ var httpService = new Vue({
       }
     },
     commonPost: function commonPost(url, data) {
+      debugger;
       url = this.addSID(url);
       data.version = this.version;
       let localTime = new Date().getTime();
@@ -118,32 +119,31 @@ var httpService = new Vue({
       data.sign = this.getSign('biz_module=' + data.biz_module + '&biz_method=' + data.biz_method + '&time=' + data.time);
       var _self = this;
       return new Promise(function (resolve, reject) {
-        axios({method: 'post', url: url, data: data}).then(function (response) {
-          if (response.status === 200) {
-            if (response.data.code === '1c01') {
-              resolve(response.data);
-            } else {
-              _self.$message({
-                showClose: true,
-                message: response.data.msg,
-                type: 'error'
-              });
-              reject(response.data);
-            }
+        mui.ajax(url, {
+          data: data,
+          async: true,
+          dataType: 'json',
+          // crossDomain: true, //强制使用5+跨域
+          type: 'POST',
+          timeout: 10000,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          processData: false,//data
+          success: function (data) {
+            resolve(data)
+          },
+          error: function (xhr, type, errorThrown) {
+            console.log(xhr, type, errorThrown)
+            reject(errorThrown)
+            // window.localStorage.KEY = '';
+            // window.localStorage.SID = '';
+            // _self.KEY = '';
+            // _self.SID = '';
+            // window.location.href = '/login';
+            // reject(errorThrown)
           }
-        }).catch(function (error) {
-          console.log(error);
-          if (error.response !== undefined && error.response !== '') {
-            if (error.response.status === 403 || error.response.status === 408) {
-              window.localStorage.KEY = '';
-              window.localStorage.SID = '';
-              _self.KEY = '';
-              _self.SID = '';
-              window.location.href = '/login';
-            }
-          }
-          reject(error);
-        })
+        });
       })
     },
     commonGet: function commonGet(url) {

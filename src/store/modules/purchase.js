@@ -8,7 +8,6 @@ const state = {
 
   }
 }
-
 // getters
 const getters = {
   // httpParam: state => state.httpParam,

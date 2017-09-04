@@ -122,6 +122,28 @@
       search, offerListItem, refresh, pagination, slidePage, offerInfo
     },
     mounted(){
+      if (!this.$store.state.plus.plus.os) {
+        // 监听plusready事件
+        document.addEventListener("plusready", () => {
+          switch (window.plus.os.name) {
+            case "Android":
+              alert('Android')
+              // Android平台: plus.android.*
+              break;
+            case "iOS":
+              alert('ios')
+              // iOS平台: plus.ios.*
+              break;
+            default:
+              alert('其他123')
+              // 其它平台
+              break;
+          }
+          this.$store.dispatch('setMyPlus', window.plus)
+        }, false);
+      } else {
+
+      }
       this.getHttp()
     },
     methods: {

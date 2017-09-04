@@ -5,6 +5,7 @@ import router from './router/index.js'
 import store from './store/index.js'
 import * as filters from './filters/index.js'
 
+
 //国际化
 import i18n from './i18n/index'
 
@@ -24,15 +25,20 @@ import message  from './commonCOM/message/message'
 import loading  from './commonCOM/loading/loading'
 import showImg  from './commonCOM/showImg/showImg'
 import dialog from './commonCOM/dialog/dialog'
+
+
 //原型扩展 全局方法
 Vue.prototype.$message = message;
 Vue.prototype.$loading = loading;
 Vue.prototype.$showImg = showImg;
 Vue.prototype.$dialog = dialog;
 
-import './assets/iconfont/iconfont.css'
-import './assets/css/base.less'
-import './assets/css/main.css'
+
+import '../static/iconfont/iconfont.css'
+import '../static/css/base.less'
+import '../static/css/main.css'
+import '../static/mui/fonts/mui.ttf'
+import '../static/mui/css/mui.css'
 
 var app = new Vue({
   el: '#app', //html中的根元素的ID

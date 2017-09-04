@@ -40,7 +40,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DllPlugin({
-            path: path.join(__dirname, "../dist", "DLLconfig.json"),
+            path: path.join(__dirname, "../dist", "DLLiconfig.json"),
             name: "[name]_[hash]",
             context: __dirname
         }),
